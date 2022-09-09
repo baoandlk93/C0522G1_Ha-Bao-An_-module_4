@@ -8,7 +8,7 @@ public interface IWordRepository {
 
     List<Word> displayAll();
 
-    List<Word> findByWord(String keyword);
+    List<Word> findByWord(String keyword,String lang);
 
     void addNew(Word word);
 }
