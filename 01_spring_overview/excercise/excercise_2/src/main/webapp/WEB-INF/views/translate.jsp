@@ -23,10 +23,10 @@
     <button type="submit">Translate</button>
     <%--    <span><c:out value="${translate}"></c:out></span>--%>
 </form>
+<c:if test="${translate.size()== 0}">
+    <p> Từ bạn cần tìm chúng tôi chưa cập nhật</p>
+</c:if>
 <c:forEach var="word" items="${translate}">
-    <c:if test="${translate.size()== 0}">
-        <p> Từ bạn cần tìm chúng tôi chưa cập nhật</p>
-    </c:if>
     <p>Tiếng việt: <c:out value="${word.vietnamese}"></c:out></p>
     <p>Tiếng Anh: <c:out value="${word.english}"></c:out></p>
 </c:forEach>

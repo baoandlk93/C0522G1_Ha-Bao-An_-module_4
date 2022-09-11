@@ -10,5 +10,4 @@ public interface IWordRepository {
 
     List<Word> findByWord(String keyword,String lang);
 
-    void addNew(Word word);
 }

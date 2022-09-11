@@ -8,6 +8,4 @@ public interface IWordService {
     List<Word> displayAll();
 
     List<Word> findByWord(String keyword,String lang);
-
-    void addNew(Word word);
 }

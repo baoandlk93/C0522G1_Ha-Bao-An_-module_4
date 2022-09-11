@@ -48,9 +48,4 @@ public class WordRepository implements IWordRepository {
     }
 
 
-    @Override
-    public void addNew(Word word) {
-
-    }
-
 }

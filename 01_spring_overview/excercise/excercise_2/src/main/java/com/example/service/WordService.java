@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class WordService implements IWordService {
     @Autowired
@@ -17,12 +18,8 @@ public class WordService implements IWordService {
     }
 
     @Override
-    public List<Word> findByWord(String keyword,String lang) {
-        return wordRepository.findByWord(keyword,lang);
+    public List<Word> findByWord(String keyword, String lang) {
+        return wordRepository.findByWord(keyword, lang);
     }
 
-    @Override
-    public void addNew(Word word) {
-
-    }
 }
