@@ -13,6 +13,7 @@
 </head>
 <body>
 <h2>Sandwich Condiments</h2>
+
 <c:forEach items="${condiment}" var="eat">
 <h5>${eat}</h5>
 </c:forEach>
