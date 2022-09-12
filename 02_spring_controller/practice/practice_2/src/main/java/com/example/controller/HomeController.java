@@ -19,9 +19,9 @@ public class HomeController {
         pattern = Pattern.compile(EMAIL_REGEX);
     }
 
-    @GetMapping(value = "/input")
+    @GetMapping(value = "/")
     public String home() {
-        return "home";
+        return "index";
     }
 
     @PostMapping(value = "/validate")
@@ -29,7 +29,7 @@ public class HomeController {
         boolean isValid = this.validate(email);
         if (!isValid) {
             modelMap.addAttribute("message", "Email Không hợp lệ");
-            return "home";
+            return "index";
         }
         modelMap.addAttribute("email", email);
         return "success";

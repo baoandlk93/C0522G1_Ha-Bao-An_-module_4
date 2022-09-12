@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class CurrencyConversionController {
     @Autowired
-    ICurrencyService currencyService;
+   private ICurrencyService currencyService;
 
     @GetMapping("/change")
     public String showList(){
@@ -18,7 +18,7 @@ public class CurrencyConversionController {
     }
 
     @GetMapping("/exchange")
-    public ModelAndView result(@RequestParam String result, double unit){
+    public ModelAndView result(@RequestParam String result, @RequestParam double unit){
         return new ModelAndView("/change","currency",currencyService.calculate(result,unit));
     }
 
