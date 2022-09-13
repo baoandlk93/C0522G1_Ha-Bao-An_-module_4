@@ -18,7 +18,8 @@ public class CurrencyConversionController {
     }
 
     @GetMapping("/exchange")
-    public ModelAndView result(@RequestParam String result, @RequestParam double unit){
+    public ModelAndView result(@RequestParam String result,
+                               @RequestParam double unit){
         return new ModelAndView("/change","currency",currencyService.calculate(result,unit));
     }
 
