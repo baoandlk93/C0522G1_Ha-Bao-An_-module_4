@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequestMapping(value = "/products", method = RequestMethod.GET,
-        produces = "text/html; charset=utf-8")
+@RequestMapping(value = "/products", produces = "text/html; charset=utf-8")
 public class ProductController {
     @Autowired
     private IProductService productService;
@@ -64,6 +63,13 @@ public class ProductController {
     public String view(@PathVariable int id, Model model) {
         model.addAttribute("products", productService.findById(id));
         return "/view";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam String name, Model model){
+        model.addAttribute("products",productService.findByName(name));
+        return "search";
+
     }
 }
 

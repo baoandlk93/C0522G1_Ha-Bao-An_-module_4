@@ -3,10 +3,7 @@ package com.example.repository;
 import com.example.model.Product;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class ProductRepository implements IProductRepository {
@@ -48,6 +45,17 @@ public class ProductRepository implements IProductRepository {
     @Override
     public void remove(int id) {
         products.remove(id);
+    }
+
+    @Override
+    public List<Product> findByName(String name) {
+        List<Product> productList = new ArrayList<>();
+        for (Product product : products.values()) {
+            if (product.getName().toLowerCase().contains(name)) {
+                productList.add(product);
+            }
+        }
+        return productList;
     }
 
 }

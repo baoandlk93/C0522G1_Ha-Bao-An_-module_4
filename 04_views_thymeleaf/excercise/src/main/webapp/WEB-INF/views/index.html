@@ -7,18 +7,35 @@
 
 </head>
 <body>
-<h3>Customers</h3>
+<h2>Product</h2>
 <p>
-    <a th:href="@{/products/create}">
-        Add new product
+
+
     </a>
 </p>
-<div class="notify">
-    <div th:if="${success}">
-        <span th:text="${success}"></span>
+
+<div class="row container-fluid" style="transform: translateY(-10px)">
+    <div class="col-lg-6">
+
+            <button class="btn btn-info">
+                <a th:href="@{/products/create}">  Add new product</a>
+            </button>
+
+    </div>
+    <div class="col-lg-6">
+        <form class="d-flex" th:action="@{/products/search}" method="get" style="transform: translateX(380px)">
+
+            <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="name" style="width: 300px">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
     </div>
 </div>
-<table id = "customers">
+<div class="notify">
+    <div th:if="${success}">
+        <h3 th:text="${success}"></h3>
+    </div>
+</div>
+<table id = "products">
     <thead>
     <tr>
 
@@ -26,20 +43,20 @@
         <th>Product Name</th>
         <th>Product Description</th>
         <th>Product Price</th>
-        <th>Edit</th>
-        <th>Delete</th>
-        <th>View</th>
+        <th></th>
+        <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="row : ${products}">
-        <td th:text="${row.getProductCode()}"></td>
-        <td th:text="${row.getName()}"></td>
-        <td th:text="${row.getDescription()}"></td>
-        <td th:text="${row.getPrice()}"></td>
-        <td><a th:href="@{/products/{id}/edit(id=${row.getId()})}">edit</a></td>
-        <td><a th:href="@{/products/{id}/delete(id=${row.getId()})}">delete</a></td>
-        <td><a th:href="@{/products/{id}/view(id=${row.getId()})}">view</a></td>
+        <td th:text="${row.productCode}"></td>
+        <td th:text="${row.name}"></td>
+        <td th:text="${row.description}"></td>
+        <td th:text="${row.price}"></td>
+        <td><a th:href="@{/products/{id}/edit(id=${row.id})}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+        <td><a th:href="@{/products/{id}/delete(id=${row.id})}"><i class="fa-solid fa-trash"></i></a></td>
+        <td><a th:href="@{/products/{id}/view(id=${row.id})}"><i class="fa-sharp fa-solid fa-eye"></i></a></td>
     </tr>
     </tbody>
 </table>

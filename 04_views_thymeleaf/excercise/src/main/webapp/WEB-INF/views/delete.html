@@ -2,10 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="/layout :: head"></head>
 <body>
-<h3>Remove Customer</h3>
+<h3>Remove Product</h3>
 <p>
     <a th:href="@{/products}">
-        Back to customer list
+        Back to product list
     </a>
 </p>
 <div id="form">
@@ -14,19 +14,19 @@
         <input type="hidden" th:field="*{id}"/>
         <div>
             <label>Product Code</label>
-            <input type="text" th:field="*{productCode}"/>
+            <input type="text" readonly th:field="*{productCode}"/>
         </div>
         <div>
             <label>Product Name</label>
-            <input type="email" th:field="*{name}"/>
+            <input type="text" readonly th:field="*{name}"/>
         </div>
         <div>
             <label>Product Description</label>
-            <input type="text" th:field="*{description}"/>
+            <input type="text" readonly th:field="*{description}"/>
         </div>
         <div>
             <label>Product Price</label>
-            <input type="text" th:field="*{price}"/>
+            <input type="text" readonly th:field="*{price}"/>
         </div>
         <input type="submit" value="Remove"/>
     </form>
