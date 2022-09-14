@@ -10,7 +10,8 @@ import java.util.List;
 @Service
 public class MedicalDeclarationService implements IMedicalDeclarationService {
     @Autowired
-    IMedicalDeclarationRepository declarationRepository ;
+    IMedicalDeclarationRepository declarationRepository;
+
     @Override
     public List<MedicalDeclaration> displayAll() {
         return declarationRepository.displayAll();

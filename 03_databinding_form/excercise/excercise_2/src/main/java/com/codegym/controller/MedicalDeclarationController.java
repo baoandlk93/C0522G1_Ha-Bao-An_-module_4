@@ -16,31 +16,27 @@ public class MedicalDeclarationController {
     @Autowired
     private IMedicalDeclarationService declarationService;
 
-//    @GetMapping("/")
-//    public String showHome(){
-//        return "/form/list";
-//    }
     @GetMapping("/list")
-    public ModelAndView showList(){
-        return new ModelAndView("/form/list","list",declarationService.displayAll());
+    public ModelAndView showList() {
+        return new ModelAndView("/form/list", "list", declarationService.displayAll());
     }
 
     @GetMapping("/edit")
-    public ModelAndView showFormEdit(@RequestParam int id){
+    public ModelAndView showFormEdit(@RequestParam int id) {
         ModelAndView modelAndView = new ModelAndView("/form/edit");
         MedicalDeclaration medicalDeclaration = declarationService.finById(id);
-        modelAndView.addObject("info",medicalDeclaration);
-        modelAndView.addObject("dayOfBirth",declarationService.dateList());
-        modelAndView.addObject("gender",declarationService.genderList());
-        modelAndView.addObject("country",declarationService.countryList());
-        modelAndView.addObject("travel",declarationService.travelInfo());
+        modelAndView.addObject("info", medicalDeclaration);
+        modelAndView.addObject("dayOfBirth", declarationService.dateList());
+        modelAndView.addObject("gender", declarationService.genderList());
+        modelAndView.addObject("country", declarationService.countryList());
+        modelAndView.addObject("travel", declarationService.travelInfo());
         return modelAndView;
     }
 
     @PostMapping("/save")
-    public String saveUpdate(@ModelAttribute MedicalDeclaration medical, RedirectAttributes attributes){
+    public String saveUpdate(@ModelAttribute MedicalDeclaration medical, RedirectAttributes attributes) {
         declarationService.edit(medical);
-        attributes.addFlashAttribute("message","Cập nhật thành công" + medical.getName());
+        attributes.addFlashAttribute("message", "Cập nhật thành công" + medical.getName());
         return "redirect:/list";
     }
 }

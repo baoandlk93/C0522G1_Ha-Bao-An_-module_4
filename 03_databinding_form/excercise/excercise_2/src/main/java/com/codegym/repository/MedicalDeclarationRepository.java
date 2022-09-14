@@ -4,7 +4,6 @@ import com.codegym.model.MedicalDeclaration;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -49,7 +48,7 @@ public class MedicalDeclarationRepository implements IMedicalDeclarationReposito
         return declaration;
     }
 
-    public  List<Integer> dateList() {
+    public List<Integer> dateList() {
         List<Integer> dates = new ArrayList<>();
         dates.add(1990);
         dates.add(1991);
