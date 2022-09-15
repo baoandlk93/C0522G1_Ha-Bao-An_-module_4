@@ -42,7 +42,7 @@ public class ProductController {
     }
     @PostMapping("/update")
     public String update(Product product,RedirectAttributes redirect) {
-        productService.update(product.getId(), product);
+        productService.update(product);
         redirect.addFlashAttribute("success", "Update product successfully!");
         return "redirect:/products";
     }
@@ -68,7 +68,7 @@ public class ProductController {
     @GetMapping("/search")
     public String search(@RequestParam String name, Model model){
         model.addAttribute("products",productService.findByName(name));
-        return "search";
+        return "index";
 
     }
 }
