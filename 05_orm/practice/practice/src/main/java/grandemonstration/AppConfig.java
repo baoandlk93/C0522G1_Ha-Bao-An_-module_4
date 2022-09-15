@@ -1,4 +1,4 @@
-package cg.wbd.grandemonstration;
+package grandemonstration;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

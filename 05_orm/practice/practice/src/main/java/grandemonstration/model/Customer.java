@@ -1,4 +1,4 @@
-package cg.wbd.grandemonstration.model;
+package grandemonstration.model;
 
 import jakarta.persistence.*;
 

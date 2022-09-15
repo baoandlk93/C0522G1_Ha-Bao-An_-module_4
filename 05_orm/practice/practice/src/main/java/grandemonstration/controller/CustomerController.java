@@ -1,4 +1,4 @@
-package cg.wbd.grandemonstration.controller;
+package grandemonstration.controller;
 
 import cg.wbd.grandemonstration.model.Customer;
 import cg.wbd.grandemonstration.service.CustomerService;

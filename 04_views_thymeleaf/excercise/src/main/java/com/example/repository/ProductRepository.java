@@ -70,6 +70,7 @@ public class ProductRepository implements IProductRepository {
             transaction = session.beginTransaction();
 
             session.update(product);
+
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -111,7 +112,7 @@ public class ProductRepository implements IProductRepository {
     @Override
     public List<Product> findByName(String name) {
         TypedQuery<Product> query = ConnectionUtil.entityManager.createQuery("SELECT c FROM Product AS c WHERE c.name like :name", Product.class);
-        query.setParameter("name","%"+ name+"%" );
+        query.setParameter("name", "%" + name + "%");
         return query.getResultList();
     }
 }

@@ -1,4 +1,4 @@
-package cg.wbd.grandemonstration.service.impl;
+package grandemonstration.service.impl;
 
 import cg.wbd.grandemonstration.model.Customer;
 import cg.wbd.grandemonstration.service.CustomerService;
