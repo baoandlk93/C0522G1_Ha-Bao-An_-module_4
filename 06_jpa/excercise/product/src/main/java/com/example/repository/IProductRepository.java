@@ -1,19 +1,14 @@
 package com.example.repository;
 
 import com.example.model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface IProductRepository {
-    List<Product> findAll();
-
-    void save(Product product);
-
-    Product findById(int id);
-
-    void update( Product product);
-
-    void remove(int id);
+public interface IProductRepository extends JpaRepository<Product,Integer> {
 
     List<Product> findByName(String name);
+    List<Product> findByNameContains(String name);
+
+    Product findById(int id);
 }
