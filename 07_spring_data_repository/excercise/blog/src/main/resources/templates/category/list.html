@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="category/layout :: head">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+</head>
+<body>
+<h2>Blog</h2>
+<p>
+
+
+    </a>
+</p>
+
+<div class="row container-fluid" style="transform: translateY(-10px)">
+    <div class="col-lg-6">
+
+        <button class="btn btn-info">
+            <a th:href="@{/category/create}"> Add new Category</a>
+        </button>
+
+    </div>
+    <!--    <div class="col-lg-6">-->
+    <!--        <form class="d-flex" th:action="@{/blogs/search}" method="get" style="transform: translateX(380px)">-->
+
+    <!--            <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="name" style="width: 300px">-->
+    <!--            <button class="btn btn-outline-success" type="submit">Search</button>-->
+    <!--        </form>-->
+    <!--    </div>-->
+    <!--</div>-->
+    <div class="notify">
+        <div th:if="${success}">
+            <h3 th:text="${success}"></h3>
+        </div>
+    </div>
+    <table id="products">
+        <thead>
+        <tr>
+
+            <th>Category name</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row : ${categories}">
+            <td th:text="${row.name}"></td>
+            <td><a th:href="@{/category/{id}/edit(id=${row.id})}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+            <td><a th:href="@{/category/{id}/delete(id=${row.id})}"><i class="fa-solid fa-trash"></i></a></td>
+            <td><a th:href="@{/category/{id}/view(id=${row.id})}">View Blog</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<footer th:replace="category/layout :: footer"></footer>
+</body>
+</html>

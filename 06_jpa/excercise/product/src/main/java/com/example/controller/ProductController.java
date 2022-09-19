@@ -14,11 +14,11 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
-    @GetMapping("")
-    public String index(Model model) {
-        model.addAttribute("products", productService.findAll());
-        return "index";
-    }
+//    @GetMapping("")
+//    public String index(Model model) {
+//        model.addAttribute("products", productService.findAll());
+//        return "index";
+//    }
 
     @GetMapping("/create")
     public String create(Model model) {
@@ -28,7 +28,6 @@ public class ProductController {
 
     @PostMapping("/save")
     public String save(Product product, RedirectAttributes redirect) {
-        product.setId((int) (Math.random() * 10000));
         productService.save(product);
         redirect.addFlashAttribute("success", "Create customer successfully!");
         return "redirect:/products";
@@ -65,11 +64,10 @@ public class ProductController {
         return "/view";
     }
 
-    @GetMapping("/search")
-    public String search(@RequestParam String name, Model model){
+    @GetMapping("")
+    public String search(@RequestParam(defaultValue = "") String name, Model model){
         model.addAttribute("products",productService.findByName(name));
         return "index";
 
     }
 }
-

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="category/layout :: head"></head>
+<body>
+<h3>View Content</h3>
+<p>
+    <a th:href="@{/category}">
+        Back to category list
+    </a>
+</p>
+<div class="d-inline p-2 bg-primary text-white">
+        <label th:text="${categories}"></label>
+        <label th:text="${categories.name}"></label>
+        <label th:text="${categories.bloggerName}"></label>
+        <label th:text="${categories.content}"></label>
+</div>
+
+
+<footer th:replace="category/layout :: footer"></footer>
+</body>
+</html>

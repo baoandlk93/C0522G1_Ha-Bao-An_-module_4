@@ -8,25 +8,25 @@
         Back to blog list
     </a>
 </p>
-<div id="form">
+<div class="mb-3" >
     <form th:action="@{/blogs/save}" th:object="${blogs}"
           method="POST" novalidate="novalidate">
         <input type="hidden" th:field="*{id}"/>
         <div>
             <label>Blog name</label>
-            <input type="text" th:field="*{name}"/>
-        </div>
-        <div>
-            <label>Content</label>
-            <input type="text"  th:field="*{content}"/>
+            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Blog Name" th:field="*{name}"/>
         </div>
         <div>
             <label>Blogger Name</label>
-            <input type="text" th:field="*{bloggerName}"/>
+            <input type="text" class="form-control" placeholder="Blogger Name" aria-label="Username" aria-describedby="basic-addon1" th:field="*{bloggerName}"/>
         </div>
         <div>
             <label>Date Created</label>
             <input type="date" th:field="*{dayWrite}"/>
+        </div>
+        <div class="input-group-text">
+            <label>Content</label>
+            <textarea class="form-control" aria-label="With textarea"  th:field="*{content}"/>
         </div>
         <input type="submit" value="Save"/>
     </form>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="blog/layout :: head">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+</head>
+<body>
+<h2>Blog</h2>
+<p>
+
+
+    </a>
+</p>
+
+<div class="row container-fluid" style="transform: translateY(-10px)">
+    <div class="col-lg-6">
+
+        <button class="btn btn-info">
+            <a th:href="@{/blogs/create}"> Add new blog</a>
+        </button>
+
+    </div>
+        <div class="col-lg-6">
+            <form class="d-flex" th:action="@{/blogs/search}" method="get" style="transform: translateX(380px)">
+
+                <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="name" style="width: 300px">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="notify">
+        <div th:if="${success}">
+            <h3 th:text="${success}"></h3>
+        </div>
+    </div>
+    <table id="products">
+        <thead>
+        <tr>
+
+            <th>Blog name</th>
+            <th>Content</th>
+            <th>Blogger Name</th>
+            <th>Date Created</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="row : ${blogs}">
+            <td th:text="${row.name}"></td>
+            <td><a th:href="@{/blogs/{id}/view(id=${row.id})}">View content</a></td>
+            <td th:text="${row.bloggerName}"></td>
+            <td th:text="${row.dayWrite}"></td>
+            <td th:text="${row.category.name}"></td>
+            <td><a th:href="@{/blogs/{id}/edit(id=${row.id})}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+            <td><a th:href="@{/blogs/{id}/delete(id=${row.id})}"><i class="fa-solid fa-trash"></i></a></td>
+
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:href="@{'/blogs'(page=${blogs.number - 1})}" th:if="${blogs.hasPrevious()}">Previous</a>
+        <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
+        <a th:href="@{'/blogs'(page=${blogs.number + 1})}" th:if="${blogs.hasNext()}">Next</a>
+    </div>
+</div>
+<footer th:replace="blog/layout :: footer"></footer>
+</body>
+</html>
