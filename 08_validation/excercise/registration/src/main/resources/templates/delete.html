@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
 <body>
-$END$
+<h3>Add New User</h3>
+<p>
+    <a th:href="@{/users}">
+        Back to user manage
+    </a>
+</p>
+<div class="mb-3">
+    <form th:action="@{/users/delete}" th:object="${users}"
+          method="POST" novalidate="novalidate">
+        <input type="hidden" th:field="*{id}"/>
+        <div>
+            <label>First Name</label>
+            <input readonly type="text" class="form-control" id="formGroupExampleInput" placeholder="First Name"
+                   th:field="*{firstName}"/>
+        </div>
+        <div>
+            <label>Last Name</label>
+            <input readonly type="text" class="form-control" placeholder="Blogger Name" aria-label="Last Name"
+                   aria-describedby="basic-addon1" th:field="*{lastName}"/>
+        </div>
+        <div>
+            <label>Phone Number</label>
+            <input readonly placeholder="Phone Number" type="number" th:field="*{phoneNumber}"/>
+        </div>
+        <div>
+            <label>Age</label>
+            <input readonly placeholder="Age" type="number" th:field="*{age}"/>
+        </div>
+        <div>
+            <label>Email</label>
+            <input  readonly placeholder="Email" type="text" th:field="*{email}"/>
+        </div>
+
+        <input type="submit" value="Remove"/>
+    </form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
 </body>
 </html>

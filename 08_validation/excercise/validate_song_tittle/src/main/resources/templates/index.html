@@ -18,12 +18,12 @@
     <div class="col-lg-6">
 
             <button class="btn btn-info">
-                <a th:href="@{/music/create}"> Thêm bài hát mới</a>
+                <a th:href="@{/musics/create}"> Thêm bài hát mới</a>
             </button>
 
     </div>
     <div class="col-lg-6">
-        <form class="d-flex" th:action="@{/music/search}" method="get" style="transform: translateX(380px)">
+        <form class="d-flex" th:action="@{/musics/search}" method="get" style="transform: translateX(380px)">
 
             <input class="form-control me-2" type="text" placeholder="Tìm kiếm" aria-label="Search" name="name" style="width: 300px">
             <button class="btn btn-outline-success" type="submit">Tìm kiếm</button>
@@ -42,7 +42,6 @@
         <th>Tên bài hát</th>
         <th>Ca sĩ</th>
         <th>Thể loại nhạc</th>
-        <th>Link</th>
         <th></th>
         <th></th>
         <th></th>
@@ -52,14 +51,16 @@
     <tr th:each="row : ${musics}">
         <td th:text="${row.name}"></td>
         <td th:text="${row.singer}"></td>
-        <td th:text="${row.musicType}"></td>
-        <td> <a th:href="@{${row.linkSong}}" th:text="${row.linkSong}"></a></td>
-        <td><a th:href="@{/music/{id}/edit(id=${row.id})}"><i class="fa-solid fa-pen-to-square"></i></a></td>
-        <td><a th:href="@{/music/{id}/delete(id=${row.id})}"><i class="fa-solid fa-trash"></i></a></td>
-        <td><a th:href="@{/music/{id}/view(id=${row.id})}"><i class="fa-sharp fa-solid fa-eye"></i></a></td>
+        <td th:text="${row.category}"></td>
+        <td><a th:href="@{/musics/{id}/edit(id=${row.id})}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+<!--        <td><a th:href="@{/musics/{id}/delete(id=${row.id})}"><i class="fa-solid fa-trash"></i></a></td>-->
+<!--        <td><a th:href="@{/musics/{id}/view(id=${row.id})}"><i class="fa-sharp fa-solid fa-eye"></i></a></td>-->
     </tr>
     </tbody>
 </table>
+<a th:href="@{'/musics'(page=${musics.number - 1})}" th:if="${musics.hasPrevious()}">Previous</a>
+<span th:text="${musics.number + 1}"></span>/<span th:text="${musics.totalPages}"></span>
+<a th:href="@{'/musics'(page=${musics.number + 1})}" th:if="${musics.hasNext()}">Next</a>
 <footer th:replace="/layout :: footer"></footer>
 </body>
 </html>

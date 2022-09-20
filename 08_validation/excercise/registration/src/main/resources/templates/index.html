@@ -1,10 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
 </head>
 <body>
-$END$
+<h2>User Manage</h2>
+<p>
+
+
+    </a>
+</p>
+
+<div class="row container-fluid" style="transform: translateY(-10px)">
+    <div class="col-lg-6">
+
+        <button class="btn btn-info">
+            <a th:href="@{/users/create}"> Add new User</a>
+        </button>
+
+    </div>
+    <div class="col-lg-6">
+        <form class="d-flex" th:action="@{/users/search}" method="get" style="transform: translateX(380px)">
+
+            <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" name="name" style="width: 300px">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+<div class="notify">
+    <div th:if="${success}">
+        <h3 th:text="${success}"></h3>
+    </div>
+</div>
+<table id="products">
+    <thead>
+    <tr>
+
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Phone Number</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${users}">
+        <td th:text="${row.firstName}"></td>
+        <td th:text="${row.lastName}"></td>
+        <td th:text="${row.phoneNumber}"></td>
+        <td th:text="${row.age}"></td>
+        <td th:text="${row.email}"></td>
+        <td><a th:href="@{/users/{id}/edit(id=${row.id})}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+        <td><a th:href="@{/users/{id}/delete(id=${row.id})}"><i class="fa-solid fa-trash"></i></a></td>
+
+    </tr>
+    </tbody>
+</table>
+<div>
+    <a th:href="@{'/users'(page=${users.number - 1},name = ${name})}" th:if="${users.hasPrevious()}">Previous</a>
+    <span th:text="${users.number + 1}"></span>/<span th:text="${users.totalPages}"></span>
+    <a th:href="@{'/users'(page=${users.number + 1},name = ${name})}" th:if="${users.hasNext()}">Next</a>
+</div>
+</div>
+<footer th:replace="/layout :: footer"></footer>
 </body>
 </html>
