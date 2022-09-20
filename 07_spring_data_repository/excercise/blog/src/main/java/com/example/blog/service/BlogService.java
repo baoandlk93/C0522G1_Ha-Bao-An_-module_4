@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BlogService implements IBlogService {
     @Autowired
-    IBlogRepository blogRepository;
+    private IBlogRepository blogRepository;
 
     @Override
     public Page<Blog> findAll(Pageable pageable) {

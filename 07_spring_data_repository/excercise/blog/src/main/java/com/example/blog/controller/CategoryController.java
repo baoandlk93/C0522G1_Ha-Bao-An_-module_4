@@ -15,11 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping(value = "/category", produces = "text/html; charset=utf-8")
 public class CategoryController {
-    @Autowired
-    IBlogService blogService;
 
     @Autowired
-    ICategoryService categoryService;
+    private ICategoryService categoryService;
 
     @GetMapping("")
     public String index(Model model) {

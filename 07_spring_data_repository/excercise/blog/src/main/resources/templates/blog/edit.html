@@ -13,6 +13,13 @@
           method="POST" novalidate="novalidate">
         <input type="hidden" th:field="*{id}"/>
         <div>
+            Category <select th:field="*{category}">Category
+            <option th:each="item: ${categories}"
+                    th:value="${item.id}"
+                    th:text="${item.name}"></option>
+        </select>
+        </div>
+        <div>
             <label>Blog Name</label>
             <input readonly type="text" th:field="*{name}"/>
         </div>

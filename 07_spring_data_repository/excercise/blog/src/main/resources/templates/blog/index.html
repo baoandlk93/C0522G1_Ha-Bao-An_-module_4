@@ -61,9 +61,9 @@
         </tbody>
     </table>
     <div>
-        <a th:href="@{'/blogs'(page=${blogs.number - 1})}" th:if="${blogs.hasPrevious()}">Previous</a>
+        <a th:href="@{'/blogs'(page=${blogs.number - 1},name = ${name})}" th:if="${blogs.hasPrevious()}">Previous</a>
         <span th:text="${blogs.number + 1}"></span>/<span th:text="${blogs.totalPages}"></span>
-        <a th:href="@{'/blogs'(page=${blogs.number + 1})}" th:if="${blogs.hasNext()}">Next</a>
+        <a th:href="@{'/blogs'(page=${blogs.number + 1},name = ${name})}" th:if="${blogs.hasNext()}">Next</a>
     </div>
 </div>
 <footer th:replace="blog/layout :: footer"></footer>
