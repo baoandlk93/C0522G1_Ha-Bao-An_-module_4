@@ -18,7 +18,7 @@ public class BlogController {
     private IBlogService blogService;
 
     @Autowired
-    ICategoryService categoryService;
+    private ICategoryService categoryService;
 
     @GetMapping("")
     public String index(@RequestParam(defaultValue = "") String name, Model model,
