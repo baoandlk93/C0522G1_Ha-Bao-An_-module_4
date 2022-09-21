@@ -16,11 +16,11 @@ public class UserDto {
     @Pattern(regexp = "(^$|[0-9]{10})", message = "Số điện thoại phải bắt đầu từ 0 và phải là 10 số")
     private String phoneNumber;
 
-    @Min(value = 18, message = "Tuổi phải trên 18 và không quá 80")
-    @Max(value = 80, message = "Tuổi phải trên 18 và không quá 80")
+    @Min(value = 18, message = "Tuổi phải trên 18")
     private int age;
 
-    @Pattern(regexp = "^[a-zA-Z][.\\\\w]{7,}@[a-z]{2,9}([.][a-z]{2,3}){1,2}$", message = "Vui lòng nhập đúng định dạng email")
+//    @Pattern(regexp = "^[a-zA-Z][.\\\\w]{7,}@[a-z]{2,9}([.][a-z]{2,3}){1,2}$", message = "Vui lòng nhập đúng định dạng email")
+    @Email(message = "Vui lòng nhập đúng định dạng email")
     private String email;
 
     public UserDto() {
