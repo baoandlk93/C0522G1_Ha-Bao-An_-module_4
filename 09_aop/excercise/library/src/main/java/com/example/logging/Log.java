@@ -14,6 +14,10 @@ public class Log {
     @Pointcut("within(com.example.controller.*)")
     public void allMethod(){
     }
+    @Pointcut("execution(* com.example.controller.BookController.showAll(..))")
+    public void showMethod(){
+
+    }
     @Before("allMethod()")
     public void beforeCallMethod(JoinPoint joinPoint){
         System.out.println("Start Method name" +
@@ -22,8 +26,14 @@ public class Log {
     }
     @After("allMethod()")
     public void afterCallMethod(JoinPoint joinPoint){
-        count++;
         System.out.println("End Method name" +
+                joinPoint.getSignature().getName()+
+                " Time: "+ LocalDateTime.now());
+    }
+    @After("showMethod()")
+    public void afterCallShowMethod(JoinPoint joinPoint){
+        count++;
+        System.out.println("End Method name " +
                 joinPoint.getSignature().getName()+
                 " Time: "+ LocalDateTime.now());
         System.out.println("Number of visits : " + count);
