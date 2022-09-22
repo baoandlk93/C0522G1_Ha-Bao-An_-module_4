@@ -5,9 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-<h1>
-    Ngoài số lượng sách của thư viện
-</h1>
+<div class="notify">
+    <div th:if="${message}">
+        <h2 th:text="${message}" style="color: #4CAF50"></h2>
+    </div>
+</div>
 <a th:href="@{/book}">Back to Library</a>
 </body>
 </html>

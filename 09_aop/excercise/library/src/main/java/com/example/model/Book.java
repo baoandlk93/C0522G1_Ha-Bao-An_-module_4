@@ -10,6 +10,7 @@ public class Book {
     private String nameBook;
     private String author;
     private int count;
+    private int totalBook;
 
     @ManyToOne
     @JoinColumn(name = "library",referencedColumnName = "id")
@@ -17,6 +18,14 @@ public class Book {
 
 
     public Book() {
+    }
+
+    public int getTotalBook() {
+        return totalBook;
+    }
+
+    public void setTotalBook(int totalBook) {
+        this.totalBook = totalBook;
     }
 
     public int getCount() {

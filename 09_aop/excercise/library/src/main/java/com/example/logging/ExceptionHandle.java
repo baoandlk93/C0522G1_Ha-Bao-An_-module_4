@@ -2,17 +2,21 @@ package com.example.logging;
 
 import com.example.exception.EmptyBooksException;
 import com.example.exception.OutOfBoundsLimitException;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @ControllerAdvice
 public class ExceptionHandle {
     @ExceptionHandler(EmptyBooksException.class)
-    public String showErrorEmpty(){
+    public String showErrorEmpty(Model model){
+        model.addAttribute("message","Số lượng sách trong thư viện đã hết, vui lòng chọn sách khác !");
         return "errorPage";
     }
     @ExceptionHandler(OutOfBoundsLimitException.class)
-    public String showErrorFull(){
+    public String showErrorFull(Model model){
+        model.addAttribute("message","Số lượng sách của chúng tôi đã đủ, bạn có nhơ mình mượn ở đâu không ?");
         return "errorPage";
     }
 }

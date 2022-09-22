@@ -50,7 +50,7 @@ public class BookController {
     public String giveBack(@PathVariable int id) throws OutOfBoundsLimitException {
         Book book = iBookService.findById(id);
         book.setCount(book.getCount()+1);
-        if (book.getCount()>5) {
+        if (book.getCount()> book.getTotalBook()) {
             throw new OutOfBoundsLimitException();
         }
         iBookService.update(book);
