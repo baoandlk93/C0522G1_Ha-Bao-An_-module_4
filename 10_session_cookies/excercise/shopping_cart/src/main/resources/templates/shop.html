@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head">
+    <meta charset="UTF-8">
+    <title>Shop</title>
+</head>
+<body>
+<p>
+    <a href="/shopping-cart">Your cart</a>
+</p>
+<table id="products">
+    <thead>
+    <tr>
+        <td>Image</td>
+        <td>Name</td>
+        <td>Price</td>
+        <td>Add To Cart</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product:${products}">
+        <td>
+            <a th:href="@{/detail/{id}(id = ${product.id})}">
+                <img th:src="@{${product.image}}" style="width: 120px;height: auto">
+            </a>
+
+        </td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td><a th:href="@{/add/__${product.id}__(action='list')}" class="btn btn-success">Add To Cart</a></td>
+    </tr>
+    </tbody>
+</table>
+<div class="col-md-4" th:if="${historyProduct}">
+    <div class="card-sticky-top border-0">
+        <img th:src="${historyProduct.image}" class="card-img-top">
+        <div class="card-body">
+            <h4 class="card-tittle" th:text="${historyProduct.name}"></h4>
+            <p class="card-tittle" th:text="${historyProduct.price}"></p>
+        </div>
+    </div>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
