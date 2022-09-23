@@ -36,21 +36,22 @@ public class BookController {
     }
 
     @GetMapping("/{id}/borrow")
-    public String borrow(@PathVariable int id) throws EmptyBooksException {
+    public String changeDecrease(@PathVariable int id) throws EmptyBooksException {
         Book book = iBookService.findById(id);
-        book.setCount(book.getCount()-1);
-        if (book.getCount()<0) {
+        book.setCount(book.getCount() - 1);
+        if (book.getCount() < 0) {
             throw new EmptyBooksException();
         }
         iBookService.update(book);
         return "redirect:/book";
 
     }
+
     @GetMapping("/{id}/giveBack")
-    public String giveBack(@PathVariable int id) throws OutOfBoundsLimitException {
+    public String changeIncrease(@PathVariable int id) throws OutOfBoundsLimitException {
         Book book = iBookService.findById(id);
-        book.setCount(book.getCount()+1);
-        if (book.getCount()> book.getTotalBook()) {
+        book.setCount(book.getCount() + 1);
+        if (book.getCount() > book.getTotalBook()) {
             throw new OutOfBoundsLimitException();
         }
         iBookService.update(book);
