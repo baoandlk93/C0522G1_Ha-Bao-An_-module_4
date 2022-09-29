@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>List Smartphone</title>
+    <link rel="stylesheet" href="/static/bootstrap-5.2.1-dist/css/bootstrap.css">
+</head>
+<body>
+<form id="add-smartphone">
+    <table class="table">
+        <tr>
+            <td>Producer:</td>
+            <td><input type="text" id="producer" placeholder="producer"></td>
+        </tr>
+        <tr>
+            <td>Model:</td>
+            <td><input type="text" id="model" placeholder="model"></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" id="price" placeholder="price"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" onclick="addNewSmartPhone()"></td>
+        </tr>
+    </table>
+</form>
+<h1>Smartphone List</h1>
+<table id="smartphoneList" class="table-active">
+    <thead>
+    <tr>
+        <td>Producer</td>
+        <td>Model</td>
+        <td>Price</td>
+        <td>Delete</td>
+        <td>Update</td>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="smartphone: ${smartphones}">
+        <tr>
+            <td th:text="${smartphone.producer}"></td>
+            <td th:text="${smartphone.model}"></td>
+            <td th:text="${smartphone.price}"></td>
+            <td><a class="deleteSmartphone" th:href="${smartphone.getId()}">Delete</a></td>
+            <td><a class="updateSmartphone" th:href="${smartphone.getId()}">Update</a></td>
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Edit
+                </button>
+            </td>
+
+        </tr>
+    </th:block>
+    </tbody>
+</table>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <th:block th:each="smartphone: ${smartphones}">
+                    <tr>
+                        <td th:text="${smartphone.producer}"></td>
+                        <td th:text="${smartphone.model}"></td>
+                        <td th:text="${smartphone.price}"></td>
+                    </tr>
+                </th:block>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    function addNewSmartPhone() {
+        let producer = $('#producer').val();
+        let model = $('#model').val();
+        let price = $('#price').val();
+        let newSmartphone = {
+            producer: producer,
+            model: model,
+            price: price
+        };
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            data: JSON.stringify(newSmartphone),
+            //tên API
+            url: "http://localhost:8080/smartphones",
+            success: successHandler
+
+        });
+        event.preventDefault();
+    }
+
+    function editSmartPhone() {
+        let producer = $('#editProducer').val();
+        let model = $('#editModel').val();
+        let price = $('#editPrice').val();
+        let editSmartphone = {
+            producer: producer,
+            model: model,
+            price: price
+        };
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "PATH",
+            data: JSON.stringify(editSmartphone),
+            url: "http://localhost:8080/smartphones/list",
+            success: successHandler
+
+        });
+        event.preventDefault();
+    }
+
+    function successHandler() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/smartphones",
+            success: function (data) {
+                let content = '    <tr>\n' +
+                    '        <td>Producer</td>\n' +
+                    '        <td>Model</td>\n' +
+                    '        <td>Price</td>\n' +
+                    '        <td>Delete</td>\n' +
+                    '        <td>Update</td>\n' +
+                    '    </tr>';
+                for (let i = 0; i < data.length; i++) {
+                    content += getSmartphone(data[i]);
+                }
+                document.getElementById('smartphoneList').innerHTML = content;
+            }
+        });
+    }
+
+    function getSmartphone(smartphone) {
+        return `<tr><td >${smartphone.producer}</td><td >${smartphone.model}</td><td >${smartphone.price}</td>` +
+            `<td><a class="deleteSmartphone" href="${smartphone.id}">Delete</a></td></tr>` +
+            `<td><a class="updateSmartphone" href="${smartphone.id}">Update</a></td></tr>`;
+    }
+
+    $(document).ready(function () {
+        $('.deleteSmartphone').click(function (event) {
+            let a = $(this);
+            let smartphoneId = a.attr("href");
+            $.ajax({
+                type: "DELETE",
+                url: `http://localhost:8080/smartphones/${smartphoneId}`,
+                success: function (data) {
+                    a.parent().parent().remove();
+                }
+            });
+            event.preventDefault();
+        });
+        $('.updateSmartphone').click(function (event) {
+            let a = $(this);
+            let smartphoneId = a.attr("href");
+            $.ajax({
+                type: "GET",
+                url: `http://localhost:8080/smartphones/list/${smartphoneId}`,
+                success: function (data) {
+                    a.parent().parent().update();
+                }
+            });
+            event.preventDefault();
+        });
+    })
+</script>
+<script src="/static/bootstrap-5.2.1-dist/jquery-3.6.1.min.js"></script>
+<script src="/static/bootstrap-5.2.1-dist/js/bootstrap.js"></script>
+</body>
+</html>
