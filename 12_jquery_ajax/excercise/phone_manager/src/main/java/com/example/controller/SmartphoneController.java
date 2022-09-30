@@ -20,20 +20,14 @@ public class SmartphoneController {
     public ResponseEntity<Smartphone> createSmartphone(@RequestBody Smartphone smartphone) {
         return new ResponseEntity<>(smartphoneService.save(smartphone), HttpStatus.CREATED);
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<Smartphone> editSmartphone(@RequestBody Smartphone smartphone) {
+        return new ResponseEntity<>(smartphoneService.save(smartphone), HttpStatus.CREATED);
+    }
 
     @GetMapping
     public ResponseEntity<Iterable<Smartphone>> allPhones() {
         return new ResponseEntity<>(smartphoneService.findAll(), HttpStatus.OK);
-    }
-    @GetMapping("/list/{id}")
-    public ModelAndView showFormEdit(@PathVariable Long id) {
-        ModelAndView modelAndView = new ModelAndView("/list");
-        modelAndView.addObject("smartphones", smartphoneService.findById(id).get());
-        return modelAndView;
-    }
-    @PatchMapping("/list")
-    public ResponseEntity<Smartphone> updateSmartphone(@RequestBody Smartphone smartphone){
-        return new ResponseEntity<>(smartphoneService.save(smartphone),HttpStatus.OK);
     }
 
     @GetMapping("/list")
@@ -52,5 +46,10 @@ public class SmartphoneController {
         smartphoneService.remove(id);
         return new ResponseEntity<>(smartphoneOptional.get(), HttpStatus.NO_CONTENT);
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<Smartphone> updateSmartphone(@PathVariable Long id) {
+        Optional<Smartphone> smartphoneOptional = smartphoneService.findById(id);
+        return smartphoneOptional.map(smartphone -> new ResponseEntity<>(smartphoneService.save(smartphone), HttpStatus.NO_CONTENT)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
+    }
 }

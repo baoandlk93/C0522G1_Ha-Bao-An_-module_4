@@ -32,38 +32,47 @@
     <tbody>
     <tr>
         <td>
-            <span>Loading...</span>
+            <span>Please click  button See more...</span>
         </td>
     </tr>
-    <tr>
-        <button id="showMore">See more</button>
-    </tr>
     </tbody>
+   <button id="showMore">See more</button>
 </table>
 
 <script src="bootstrap-5.2.1-dist/js/bootstrap.bundle.js"></script>
 <script src="jquery-3.6.1.min.js"></script>
 <script>
-    $(document).ready(function () {
-        let x = 3;
-        $.ajax({
-            url: "http://localhost:8080/api/blogs",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                $("tbody").empty();
-                let tr = [];
-                for (let i = 0; i < x; i++) {
-                    tr.push("<tr>");
-                    tr.push("<td>" + data[i].category.name + "</td>");
-                    tr.push("<td>" + data[i].name + "</td>");
-                    tr.push("<td>" + data[i].content + "</td>");
-                    tr.push("<td>" + data[i].bloggerName + "</td>");
-                    tr.push("<td>" + data[i].dayWrite + "</td>");
-                    tr.push("</tr>");
-                }
-                $("table").append(tr.join(""));
+    function insertValue(data,x) {
+        $("tbody").empty();
+        let tr = [];
+        for (let i = 0; i < x; i++) {
+            tr.push("<tr>");
+            tr.push("<td>" + data[i].category.name + "</td>");
+            tr.push("<td>" + data[i].name + "</td>");
+            tr.push("<td>" + data[i].content + "</td>");
+            tr.push("<td>" + data[i].bloggerName + "</td>");
+            tr.push("<td>" + data[i].dayWrite + "</td>");
+            tr.push("</tr>");
+            if (x === data.length) {
+               break;
             }
+        }
+        $("table").append(tr.join(""));
+        
+    }
+    $(document).ready(function () {
+        let x = 0;
+        $("#showMore").click(function () {
+            x++;
+            $.ajax({
+                url: "http://localhost:8080/api/blogs",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    insertValue(data,x);
+
+                }
+            })
         })
         $("#search").click(function () {
             $("tbody").empty();
@@ -73,52 +82,16 @@
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
-
-                    let tr = [];
-                    for (let i = 0; i < data.length; i++) {
-                        tr.push("<tr>");
-                        tr.push("<td>" + data[i].category.name + "</td>");
-                        tr.push("<td>" + data[i].name + "</td>");
-                        tr.push("<td>" + data[i].content + "</td>");
-                        tr.push("<td>" + data[i].bloggerName + "</td>");
-                        tr.push("<td>" + data[i].dayWrite + "</td>");
-                        tr.push("</tr>");
-                    }
-                    $("table").append(tr.join(""));
-                    $("span").empty();
+                    let x = data.length;
+                   insertValue(data,x);
                 }
             })
         })
-        $("#showMore").click(function () {
-            $.ajax({
-                url: "http://localhost:8080/api/blogs",
-                type: "GET",
-                dataType: "json",
-                success: function (data) {
-                    $("tbody").empty();
-                    x++;
-                    let tr = [];
-                    for (let i = 0; i < x; i++) {
-                        tr.push("<tr>");
-                        tr.push("<td>" + data[i].category.name + "</td>");
-                        tr.push("<td>" + data[i].name + "</td>");
-                        tr.push("<td>" + data[i].content + "</td>");
-                        tr.push("<td>" + data[i].bloggerName + "</td>");
-                        tr.push("<td>" + data[i].dayWrite + "</td>");
-                        tr.push("</tr>");
-                        if (x === data.length) {
-                            x--;
-                        }
-                    }
-                    $("table").append(tr.join(""));
-                    $("span").empty();
 
-                }
-            })
-        })
     })
 
 
 </script>
+
 </body>
 </html>
