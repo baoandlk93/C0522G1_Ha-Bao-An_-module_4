@@ -1,9 +1,6 @@
 package com.example.model.employee;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Employee {
@@ -17,66 +14,28 @@ public class Employee {
     private String phoneNumber;
     private String email;
     private String employeeAddress;
-    private int position;
-    private int educationDegreeID;
-    private int divisionID;
-    private String userName;
+    private boolean isDelete;
+
+    @ManyToOne
+    @JoinColumn(name = "position", referencedColumnName = "id")
+    private Position position;
+
+    @ManyToOne
+    @JoinColumn(name = "education_degree",referencedColumnName = "id")
+    private EducationDegree educationDegreeID;
+
+    @ManyToOne
+    @JoinColumn(name = "division",referencedColumnName = "id")
+    private Division divisionID;
+
+//    @OneToOne
+//    @JoinColumn(name = "user",referencedColumnName = "user_name")
+//    private User user;
 
     public Employee() {
     }
 
-    public Employee(int id, String name, String dayOfBirth, String idCard, String phoneNumber, String email, String employeeAddress, int position, int educationDegreeID, int divisionID, double salary) {
-        this.id = id;
-        this.name = name;
-        this.dayOfBirth = dayOfBirth;
-        this.idCard = idCard;
-        this.salary = salary;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.employeeAddress = employeeAddress;
-        this.position = position;
-        this.educationDegreeID = educationDegreeID;
-        this.divisionID = divisionID;
-    }
 
-    public Employee(int id,
-                    String name,
-                    String dayOfBirth,
-                    String idCard,
-                    String phoneNumber,
-                    String email,
-                    String employeeAddress,
-                    int position,
-                    int educationDegreeID,
-                    int divisionID,
-                    double salary,
-                    String userName) {
-        this.id = id;
-        this.name = name;
-        this.dayOfBirth = dayOfBirth;
-        this.idCard = idCard;
-        this.salary = salary;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.employeeAddress = employeeAddress;
-        this.position = position;
-        this.educationDegreeID = educationDegreeID;
-        this.divisionID = divisionID;
-        this.userName = userName;
-    }
-
-    public Employee(String name, String dayOfBirth, String idCard, String phoneNumber, String email, String employeeAddress, int position, int educationDegreeID, int divisionID, double salary) {
-        this.name = name;
-        this.dayOfBirth = dayOfBirth;
-        this.idCard = idCard;
-        this.salary = salary;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.employeeAddress = employeeAddress;
-        this.position = position;
-        this.educationDegreeID = educationDegreeID;
-        this.divisionID = divisionID;
-    }
 
     public int getId() {
         return id;
@@ -142,35 +101,28 @@ public class Employee {
         this.employeeAddress = employeeAddress;
     }
 
-    public int getPosition() {
+    public Position getPosition() {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
-    public int getEducationDegreeID() {
+    public EducationDegree getEducationDegreeID() {
         return educationDegreeID;
     }
 
-    public void setEducationDegreeID(int educationDegreeID) {
+    public void setEducationDegreeID(EducationDegree educationDegreeID) {
         this.educationDegreeID = educationDegreeID;
     }
 
-    public int getDivisionID() {
+    public Division getDivisionID() {
         return divisionID;
     }
 
-    public void setDivisionID(int divisionID) {
+    public void setDivisionID(Division divisionID) {
         this.divisionID = divisionID;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 }

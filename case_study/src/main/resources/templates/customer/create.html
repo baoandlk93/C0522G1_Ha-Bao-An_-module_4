@@ -1,51 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-
-    <style>
-        input[type=text], input[type=email], input[type=number], input[type= date], textarea,select {
-            width: 100%;
-            padding: 12px 0px;
-            margin: 8px 0;
-            display: inline-block;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        #form {
-            width: 40%;
-            border-radius: 5px;
-            background-color: #f2f2f2;
-            padding: 20px;
-            margin-top: 20px;
-            margin-left: 30%;
-            margin-bottom: 30px;
-            /*background-image: url("https://t4.ftcdn.net/jpg/03/22/45/85/360_F_322458522_fWMrqLWx59EDO1jYpMq0ACdkzv8YEYUj.jpg");*/
-        }
-        input[type=submit] {
-            background-color: #22ff00;
-            width: 100px;
-            height: 40px;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        #save:hover{
-            color: #22ff00;
-            background-color: red;
-        }
-  body{
-      background-image: url("https://wallpapercave.com/wp/uuXY5N8.jpg");
-  }
-    </style>
-</head>
+<head th:replace="/index.html :: head"></head>
 <body>
-<head th:insert="/index :: head"></head>
+<header th:replace="/index :: head"></header>
+<nav th:replace="/index :: navbar"></nav>
 <div class="text-center" ><h2>Create Customer</h2></div>
 <div id="form" style="text-align: center">
-
     <form th:action="@{/customer/save}" th:object="${customerDto}"
           method="post" novalidate="novalidate">
         <input type="hidden" th:field="*{id}"/>
@@ -106,10 +66,6 @@
         <input id="save" type="submit" value="Save"/>
     </form>
 </div>
-
 </body>
-<footer th:insert="/index :: footer"></footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-        crossorigin="anonymous"></script>
+<footer th:replace="/index :: footer"></footer>
 </html>

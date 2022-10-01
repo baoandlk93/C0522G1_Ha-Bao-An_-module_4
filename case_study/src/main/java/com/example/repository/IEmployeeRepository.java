@@ -1,2 +1,7 @@
-package com.example.repository;public interface IEmployeeRepository {
+package com.example.repository;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface IEmployeeRepository {
 }

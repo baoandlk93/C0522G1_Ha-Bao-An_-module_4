@@ -1,7 +1,5 @@
 package com.example.model.customer;
 
-import com.example.model.customer.Customer;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -12,7 +10,7 @@ public class CustomerType {
     private int id;
     private String name;
 
-    @OneToMany(mappedBy = "customerTypeID")
+    @OneToMany(mappedBy = "customerType")
     private Set<Customer> customers;
 
     public CustomerType() {

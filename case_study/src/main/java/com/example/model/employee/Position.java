@@ -1,9 +1,7 @@
 package com.example.model.employee;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Position {
@@ -11,6 +9,9 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    @OneToMany(mappedBy = "position")
+    private Set<Employee> employees;
 
     public Position() {
     }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/index :: head"></head>
+<body>
+<header th:replace="/index :: header"></header>
+<nav th:replace="/index :: navbar"></nav>
+<div class="d-flex justify-content-center">
+    <form method="post" class="w-50 border border-2 border-success p-3 rounded form-signin">
+        <select id="service" onchange="myFunction(this.value)" class="form-select form-select-lg mb-3"
+                aria-label=".form-select-lg example">
+            <option> -- Choose Service --</option>
+            <option value="villa">Villa</option>
+            <option value="room"> Room</option>
+            <option value="house"> House</option>
+        </select>
+        <div class="container justify-content-center">
+            <div class="input-group" style="display: block">
+                <p class="input-group-text">
+                    <input type="text" class="form-control" name="name" placeholder="Service Name">
+                </p>
+            </div>
+            <div class="input-group" style="display: block">
+                <p class="input-group-text">
+                    <input type="text" class="form-control" name="area" placeholder="Service Area">
+                </p>
+            </div>
+            <div class="input-group " style="display: block">
+                <p class="input-group-text">
+                    <input type="text" class="form-control" name="cost" placeholder="Service Cost">
+                </p>
+            </div>
+            <div class="input-group" style="display: block">
+                <p class="input-group-text">
+                    <input type="text" class="form-control" name="maxPeople" placeholder="Service Max People">
+                </p>
+            </div>
+            <div class="input-group" style="display: block">
+                <p class="input-group-text">
+                    <input type="text" class="form-control" name="rentTypeID" placeholder="Rent Type ID">
+                </p>
+            </div>
+            <div class="input-group" id="villa1" style="display: block">
+                <p class="input-group-text">
+                    <input type="text" class="form-control" name="standardRoom" placeholder="Standard Room">
+                </p>
+            </div>
+            <div class="input-group" id="villa2" style="display: none">
+                <p class="input-group-text">
+                    <input type="text" class="form-control" name="descriptionOtherConvenience"
+                           placeholder="Description Other Convenience">
+                </p>
+            </div>
+            <div class="input-group" id="villa3" style="display: none">
+                <p class="input-group-text">
+                    <input type="text" class="form-control" name="poolArea" placeholder="Pool Area">
+                </p>
+            </div>
+            <div class="input-group" id="villa4" style="display: none">
+                <p class="input-group-text">
+                    <input type="text" class="form-control" name="numberOfFloors" placeholder="Number Of Floors">
+                </p>
+            </div>
+            <div class="input-group" id="room" style="display: none">
+                <p class="input-group-text intro">
+                    <input type="text" class="form-control" name="facilityFree" placeholder="Free Service">
+                </p>
+
+            </div>
+            <div class="input-group">
+                <button class="btn btn-lg btn-success" type="submit" value="create">Create</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    function myFunction(value) {
+        switch (value) {
+            case "villa":
+                document.getElementById("villa1").style.display = "block";
+                document.getElementById("villa2").style.display = "block";
+                document.getElementById("villa3").style.display = "block";
+                document.getElementById("villa4").style.display = "block";
+                break;
+            case "house":
+                document.getElementById("villa1").style.display = "none";
+                document.getElementById("villa2").style.display = "none";
+                document.getElementById("villa3").style.display = "none";
+                document.getElementById("villa4").style.display = "none";
+                document.getElementById("villa1").style.display = "block";
+                document.getElementById("villa2").style.display = "block";
+                document.getElementById("villa4").style.display = "block";
+                break;
+            case "room":
+                document.getElementById("villa1").style.display = "none";
+                document.getElementById("villa2").style.display = "none";
+                document.getElementById("villa3").style.display = "none";
+                document.getElementById("villa4").style.display = "none";
+                document.getElementById("room").style.display = "block";
+                break;
+            default:
+                document.getElementById("villa1").style.display = "none";
+                document.getElementById("villa2").style.display = "none";
+                document.getElementById("villa3").style.display = "none";
+                document.getElementById("villa4").style.display = "none";
+                document.getElementById("room").style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

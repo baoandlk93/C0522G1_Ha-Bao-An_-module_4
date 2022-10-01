@@ -1,2 +1,4 @@
-package com.example.service;public class IEmployeeService {
+package com.example.service;
+
+public interface IEmployeeService {
 }

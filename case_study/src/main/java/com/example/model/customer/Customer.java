@@ -14,10 +14,19 @@ public class Customer {
     private String phoneNumber;
     private String email;
     private String customerAddress;
+    private boolean isDelete;
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
 
     @ManyToOne
     @JoinColumn(name = "customer_type_id",referencedColumnName = "id")
-    private CustomerType customerTypeID;
+    private CustomerType customerType;
 
     public Customer() {
     }
@@ -30,7 +39,7 @@ public class Customer {
                     String phoneNumber,
                     String email,
                     String customerAddress,
-                    CustomerType customerTypeID) {
+                    CustomerType customerType) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -39,7 +48,7 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.customerAddress = customerAddress;
-        this.customerTypeID = customerTypeID;
+        this.customerType = customerType;
     }
 
     public int getId() {
@@ -106,11 +115,11 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
-    public CustomerType getCustomerTypeID() {
-        return customerTypeID;
+    public CustomerType getCustomerType() {
+        return customerType;
     }
 
-    public void setCustomerTypeID(CustomerType customerTypeID) {
-        this.customerTypeID = customerTypeID;
+    public void setCustomerType(CustomerType customerTypeID) {
+        this.customerType = customerTypeID;
     }
 }

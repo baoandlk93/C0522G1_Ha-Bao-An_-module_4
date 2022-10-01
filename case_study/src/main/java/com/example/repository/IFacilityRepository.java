@@ -1,2 +1,7 @@
-package com.example.repository;public class IFacilityRepository {
+package com.example.repository;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface IFacilityRepository {
 }

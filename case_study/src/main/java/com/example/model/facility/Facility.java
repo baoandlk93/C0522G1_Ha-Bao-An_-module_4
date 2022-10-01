@@ -1,13 +1,25 @@
-package model.facility;
+package com.example.model.facility;
 
+import javax.persistence.*;
+
+@Entity
 public class Facility {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private int area;
     private double cost;
     private int maxPeople;
+    private boolean isDelete;
+
+
     private int rentTypeID;
-    private int facilityTypeID;
+
+    @ManyToOne
+    @JoinColumn(name = "facility_type",referencedColumnName = "id")
+    private FacilityType facilityTypeID;
+
     private String standardRoom;
     private String descriptionOtherConvenience;
     private double poolArea;
@@ -23,7 +35,7 @@ public class Facility {
                     double cost,
                     int maxPeople,
                     int rentTypeID,
-                    int facilityTypeID,
+                    FacilityType facilityTypeID,
                     String standardRoom,
                     String descriptionOtherConvenience,
                     double poolArea,
@@ -91,11 +103,11 @@ public class Facility {
         this.rentTypeID = rentTypeID;
     }
 
-    public int getFacilityTypeID() {
+    public FacilityType getFacilityTypeID() {
         return facilityTypeID;
     }
 
-    public void setFacilityTypeID(int facilityTypeID) {
+    public void setFacilityTypeID(FacilityType facilityTypeID) {
         this.facilityTypeID = facilityTypeID;
     }
 

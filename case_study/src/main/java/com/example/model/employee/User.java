@@ -1,9 +1,6 @@
 package com.example.model.employee;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -11,6 +8,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String userName;
     private String password;
+
+//    @OneToOne(mappedBy = "user")
+//    Employee employee;
 
     public User() {
     }
