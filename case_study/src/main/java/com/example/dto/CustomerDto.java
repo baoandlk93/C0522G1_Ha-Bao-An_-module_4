@@ -1,47 +1,26 @@
-package com.example.model.customer;
+package com.example.dto;
 
+import com.example.model.customer.CustomerType;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CustomerDto {
     private int id;
     private String name;
 
     @DateTimeFormat(pattern = "yyy-MM-dd")
     private Date dateOfBirth;
+
     private int gender;
     private String idCard;
     private String phoneNumber;
     private String email;
     private String customerAddress;
     private boolean isDelete;
+    private int customerType;
 
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean delete) {
-        isDelete = delete;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "customer_type_id", referencedColumnName = "id")
-    private CustomerType customerType;
-
-    public Customer() {
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
+    public CustomerDto() {
     }
 
     public int getId() {
@@ -58,6 +37,14 @@ public class Customer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public int getGender() {
@@ -100,11 +87,29 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
-    public CustomerType getCustomerType() {
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
+
+    public int getCustomerType() {
         return customerType;
     }
 
-    public void setCustomerType(CustomerType customerTypeID) {
-        this.customerType = customerTypeID;
+    public void setCustomerType(int customerType) {
+        this.customerType = customerType;
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
     }
 }

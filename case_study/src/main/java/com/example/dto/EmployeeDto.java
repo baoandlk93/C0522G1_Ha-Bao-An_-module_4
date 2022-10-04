@@ -1,47 +1,30 @@
-package com.example.model.employee;
+package com.example.dto;
 
-import javax.persistence.*;
+import com.example.model.employee.Division;
+import com.example.model.employee.EducationDegree;
+import com.example.model.employee.Position;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
-@Entity
-public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class EmployeeDto {
     private int id;
     private String name;
+
+    @DateTimeFormat(pattern = "yyy-MM-dd")
     private Date dayOfBirth;
+
     private String idCard;
     private double salary;
     private String phoneNumber;
     private String email;
     private String employeeAddress;
     private boolean isDelete;
-
-    @ManyToOne
-    @JoinColumn(name = "position", referencedColumnName = "id")
     private Position position;
-
-    @ManyToOne
-    @JoinColumn(name = "education_degree",referencedColumnName = "id")
     private EducationDegree educationDegreeID;
-
-    @ManyToOne
-    @JoinColumn(name = "division",referencedColumnName = "id")
     private Division divisionID;
 
-//    @OneToOne
-//    @JoinColumn(name = "user",referencedColumnName = "user_name")
-//    private User user;
-
-    public Employee() {
-    }
-
-    public boolean isDelete() {
-        return isDelete;
-    }
-
-    public void setDelete(boolean delete) {
-        isDelete = delete;
+    public EmployeeDto() {
     }
 
     public int getId() {
@@ -108,6 +91,14 @@ public class Employee {
         this.employeeAddress = employeeAddress;
     }
 
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
+
     public Position getPosition() {
         return position;
     }
@@ -132,4 +123,14 @@ public class Employee {
         this.divisionID = divisionID;
     }
 
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }

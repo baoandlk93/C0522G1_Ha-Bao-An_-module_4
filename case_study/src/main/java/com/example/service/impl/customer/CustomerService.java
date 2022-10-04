@@ -1,7 +1,7 @@
-package com.example.service.impl;
+package com.example.service.impl.customer;
 
 import com.example.model.customer.Customer;
-import com.example.repository.ICustomerRepository;
+import com.example.repository.customer.ICustomerRepository;
 import com.example.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,8 +16,8 @@ public class CustomerService implements ICustomerService {
     private ICustomerRepository customerRepository;
 
     @Override
-    public Page<Customer> findAll(Pageable pageable) {
-        return customerRepository.findAll(pageable);
+    public Page<Customer> findAll(Pageable pageable, String name) {
+        return customerRepository.findAllCustomer(pageable,name);
     }
 
     @Override
@@ -26,8 +26,8 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void remove(Customer customer) {
-        customerRepository.delete(customer);
+    public void remove(int id) {
+        customerRepository.deleteCustomer(id);
     }
 
     @Override

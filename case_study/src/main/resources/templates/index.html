@@ -9,21 +9,33 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
             crossorigin="anonymous"></script>
-
     <style>
-        header{
+        #form {
+            width: 40%;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            margin-top: 20px;
+            margin-left: 30%;
+            margin-bottom: 30px;
+            background-image: url("https://t4.ftcdn.net/jpg/03/22/45/85/360_F_322458522_fWMrqLWx59EDO1jYpMq0ACdkzv8YEYUj.jpg");
+        }
+
+        header {
             background-position: right bottom;
             background-repeat: no-repeat;
             background-size: 100%;
             background-attachment: fixed;
             background-image: url("https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_960_720.jpg");
         }
-        nav{
+
+        nav {
             background-repeat: no-repeat;
             background-size: 100%;
             background-attachment: fixed;
-            background-image:url("https://cdn.pixabay.com/photo/2016/06/02/02/33/triangles-1430105__480.png");
+            background-image: url("https://cdn.pixabay.com/photo/2016/06/02/02/33/triangles-1430105__480.png");
         }
+
         a {
             text-decoration: none;
         }
@@ -45,6 +57,23 @@
             overflow: auto;
         }
 
+        input[type=text], input[type=email], input[type=number], input[type= date], textarea, select {
+            width: 100%;
+            padding: 12px 0px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit] {
+            background-color: #22ff00;
+            width: 100px;
+            height: 40px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -66,7 +95,7 @@
                         Customer
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/customers/list}">Customer List</a></li>
+                        <li><a class="dropdown-item" th:href="@{/customers}">Customer List</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -79,11 +108,16 @@
                         Employee
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/employee}">Employee List</a></li>
+                        <li><a class="dropdown-item" th:href="@{/employees/list}">Employee List</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" th:href="@{/employee/create}">Add new Employee</a></li>
+                        <li>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal" data-bs-whatever="@mdo">
+                                <a class="dropdown-item">Add new Employee</a>
+                            </button>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -92,14 +126,169 @@
                         Facility
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Facility List</a></li>
+                        <li><a class="dropdown-item" th:href="@{/facility/list}">Facility List</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Add new Facility</a></li>
+                        <li>
+                            <a class="dropdown-item" th:href="@{/facility/create}">Add new Facility</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Contract
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/facility/list}">Contract List</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal1" data-bs-whatever="@mdo">
+                                <a class="dropdown-item" th:href="@{/facility/list}">Add new Contract</a>
+                            </button>
+                        </li>
                     </ul>
                 </li>
             </ul>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add new Employee</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" th:object="${employeeDto}" th:action="@{employees/save}">
+                        <input type="hidden" th:field="*{id}"/>
+                        <div class="mb-3">
+                            <label><b>Employee Name</b></label>
+                            <input type="text" th:field="*{name}"/>
+                            <p style="color: red" th:errors="*{name}"
+                               th:if="${#fields.hasErrors('name')}"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label><b>Date Of Birth</b></label>
+                            <input type="date" th:field="*{dayOfBirth}">
+                            <p style="color: red" th:errors="*{dayOfBirth}"
+                               th:if="${#fields.hasErrors('dayOfBirth')}"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label><b>ID card</b></label>
+                            <input type="number" th:field="*{idCard}">
+                            <p style="color: red" th:errors="*{idCard}"
+                               th:if="${#fields.hasErrors('idCard')}"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label><b>Salary</b></label>
+                            <input type="number" th:field="*{salary}">
+                            <p style="color: red" th:errors="*{salary}"
+                               th:if="${#fields.hasErrors('salary')}"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label><b>Phone Number</b></label>
+                            <input type="number" th:field="*{phoneNumber}">
+                            <p style="color: red" th:errors="*{phoneNumber}"
+                               th:if="${#fields.hasErrors('phoneNumber')}"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label><b>Email</b></label>
+                            <input type="text" th:field="*{email}">
+                            <p style="color: red" th:errors="*{email}"
+                               th:if="${#fields.hasErrors('email')}"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label><b>Address</b></label>
+                            <input type="text" th:field="*{employeeAddress}">
+                            <p style="color: red" th:errors="*{employeeAddress}"
+                               th:if="${#fields.hasErrors('employeeAddress')}"></p>
+                        </div>
+                        <div class="mb-3">
+                            <label><b>Position</b></label>
+                            <select th:field="*{position}">
+                                <option th:each="item : ${position}"
+                                        th:text="${item.name}"
+                                        th:value="${item.id}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label><b>Education Degree</b></label>
+                            <select th:field="*{educationDegreeID}">
+                                <option th:each="item : ${education}"
+                                        th:text="${item.name}"
+                                        th:value="${item.id}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label><b>Division</b></label>
+                            <select th:field="*{divisionID}">
+                                <option th:each="item : ${division}"
+                                        th:text="${item.name}"
+                                        th:value="${item.id}">
+                                </option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">Add new Contract</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name11" class="col-form-label">ID:</label>
+                            <input type="number" class="form-control" id="recipient-name11">
+                            <label for="recipient-name12" class="col-form-label">Start Day:</label>
+                            <input type="date" class="form-control" id="recipient-name12">
+                            <label for="recipient-name13" class="col-form-label">End Day:</label>
+                            <input type="date" class="form-control" id="recipient-name13">
+                            <label for="recipient-name14" class="col-form-label">Deposit:</label>
+                            <input type="number" class="form-control" id="recipient-name14">
+                            <label for="recipient-name15" class="col-form-label">Total Money:</label>
+                            <input type="text" class="form-control" id="recipient-name15">
+                            <label for="recipient-name16" class="col-form-label">Customer:</label>
+                            <select type="text" class="form-control" id="recipient-name16">
+                                <option value="">Customer</option>
+                                <option value="">Customer</option>
+                                <option value="">Customer</option>
+                                <option value="">Customer</option>
+                                <option value="">Customer</option>
+                            </select>
+                            <label for="recipient-name17" class="col-form-label">Service:</label>
+                            <select type="text" class="form-control" id="recipient-name17">
+                                <option value="">Service</option>
+                                <option value="">Service</option>
+                                <option value="">Service</option>
+                                <option value="">Service</option>
+                                <option value="">Service</option>
+                                <option value="">Service</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
         </div>
     </div>
 </nav>

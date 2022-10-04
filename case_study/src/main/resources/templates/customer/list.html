@@ -4,6 +4,11 @@
 <body>
 <header th:replace="/index :: header"></header>
 <nav th:replace="/index :: navbar"></nav>
+<div class="notify">
+    <div th:if="${success}">
+        <h3 th:text="${success}" style="color: blue"></h3>
+    </div>
+</div>
 <div class="text-center"><h1>Customer List</h1></div>
 <div class="row">
     <div class="col-lg-3"></div>
@@ -23,71 +28,83 @@
     <thead>
     <tr class="bg-primary">
         <td>Name</td>
-        <td>Date of birth</td>
+<!--        <td>Date of birth</td>-->
         <td>Gender</td>
-        <td>Id card</td>
+<!--        <td>Id card</td>-->
         <td>Phone Number</td>
-        <td>Email</td>
+<!--        <td>Email</td>-->
         <td>Customer Type</td>
         <td>Address</td>
         <td>Edit</td>
         <td>Delete</td>
-        <td>View</td>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="customer : ${customer}">
+    <tr th:each="customer : ${customers}">
         <td th:text="${customer.name}"></td>
-        <td th:text="${customer.dateOfBirth}"></td>
+<!--        <td th:text="${customer.dateOfBirth}"></td>-->
         <td th:switch="${customer.gender}">
             <span th:case="0">Female</span>
             <span th:case="1">Male</span>
             <span th:case="*">LGBT</span>
         </td>
-        <td th:text="${customer.idCard}"></td>
+<!--        <td th:text="${customer.idCard}"></td>-->
         <td th:text="${customer.phoneNumber}"></td>
-        <td th:text="${customer.email}"></td>
+<!--        <td th:text="${customer.email}"></td>-->
         <td th:if="${customer.customerType}" th:text="${customer.customerType.name}"></td>
         <td th:unless="${customer.customerType}"></td>
         <td th:text="${customer.customerAddress}"></td>
         <td>
-            <a th:href="@{/customer/edit/{id}(id=${customer.id})}">
+            <a th:href="@{/customers/edit/{id}(id=${customer.id})}">
                 <i class="fa-sharp fa-solid fa-pen-to-square"></i>
             </a>
         </td>
-        <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-               <i class="fa-sharp fa-solid fa-trash"></i></a>
-        </button> </td>
-        <td><a th:href="@{/customer/view/{id}(id=${customer.id})}"><i class="fa-sharp fa-solid fa-binoculars"></i></a>
+        <td>
+            <button th:attr="onclick=|objdelete('${customer.id}', '${customer.name}')|"
+                    class="btn btn-danger btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalDelete">
+                <i class="fa-solid fa-trash"></i>
+            </button>
         </td>
     </tr>
     </tbody>
 </table>
 <div>
-    <a th:href="@{'/customer'(page=${customer.number - 1},name=${name},address=${address},phoneNumber=${phoneNumber})}"
-       th:if="${customer.hasPrevious()}"><i class="fa-solid fa-backward"></i></a>
-    <span th:text="${customer.number + 1}"></span>/<span th:text="${customer.totalPages}"></span>
-    <a th:href="@{'/customer'(page=${customer.number + 1},name=${name},address=${address},phoneNumber=${phoneNumber})}"
-       th:if="${customer.hasNext()}"><i class="fa-solid fa-forward"></i></a>
+    <a th:href="@{'/customer'(page=${customers.number - 1},name=${name},address=${address},phoneNumber=${phoneNumber})}"
+       th:if="${customers.hasPrevious()}"><i class="fa-solid fa-backward"></i></a>
+    <span th:text="${customers.number + 1}"></span>/<span th:text="${customers.totalPages}"></span>
+    <a th:href="@{'/customer'(page=${customers.number + 1},name=${name},address=${address},phoneNumber=${phoneNumber})}"
+       th:if="${customers.hasNext()}"><i class="fa-solid fa-forward"></i></a>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Delete</button>
-            </div>
+            <form th:action="@{/customers/delete}">
+                <div class="modal-body">
+                    <input type="text" hidden name="id" id="idDelete">
+                    <p> Bạn có muốn xóa : </p>
+                    <p id="nameDelete"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" value="delete">Delete</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+<script>
+    function objdelete(id, name) {
+        document.getElementById("idDelete").value = id;
+        document.getElementById("nameDelete").innerText = name;
+    }
+</script>
 </body>
-<footer th:insert="/index :: footer"></footer>
+<footer th:replace="/index :: footer"></footer>
 </html>

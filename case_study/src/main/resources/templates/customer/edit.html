@@ -6,7 +6,7 @@
 <nav th:replace="/index :: navbar"></nav>
 <div class="abc text-center"><h3>Edit Customer</h3></div>
 <div id="form" class="text-center">
-    <form th:action="@{/customer/update}" th:object="${customerList}"
+    <form th:action="@{/customers/update}" th:object="${customers}"
           method="post" novalidate="novalidate">
         <input type="hidden" th:field="*{id}"/>
         <div>
@@ -49,21 +49,20 @@
         </div>
         <div>
             <label><b>Address</b></label>
-            <input type="text" th:field="*{address}"/>
-            <p style="color: red" th:errors="*{address}"
-               th:if="${#fields.hasErrors('address')}"></p>
+            <input type="text" th:field="*{customerAddress}"/>
+            <p style="color: red" th:errors="*{customerAddress}"
+               th:if="${#fields.hasErrors('customerAddress')}"></p>
         </div>
         <div>
             <label><b>Customer type</b></label>
             <select th:field="*{customerType}">
-                <option th:each="item :${customerTypeList}"
+                <option th:each="item :${customerType}"
                         th:text="${item.name}"
                         th:value="${item.id}">
-
                 </option>
             </select>
         </div>
-        <input id="edit" type="submit" value="Edit"/>
+        <input id="save" type="submit" value="Edit"/>
     </form>
 </div>
 

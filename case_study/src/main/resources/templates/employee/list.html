@@ -66,12 +66,13 @@
     </tr>
     </tbody>
 </table>
+
 <div>
-    <a th:href="@{'/employee'(page=${employeeList.number - 1},name=${name},address=${address},phoneNumber=${phoneNumber})}"
-       th:if="${employeeList.hasPrevious()}"><i class="fa-solid fa-backward"></i></a>
-    <span th:text="${employeeList.number + 1}"></span>/<span th:text="${employeeList.totalPages}"></span>
-    <a th:href="@{'/employee'(page=${employeeList.number + 1},name=${name},address=${address},phoneNumber=${phoneNumber})}"
-       th:if="${employeeList.hasNext()}"><i class="fa-solid fa-forward"></i></a>
+<!--    <a th:href="@{'/employee'(page=${employeeList.number - 1},name=${name},address=${address},phoneNumber=${phoneNumber})}"-->
+<!--       th:if="${employeeList.hasPrevious()}"><i class="fa-solid fa-backward"></i></a>-->
+<!--    <span th:text="${employeeList.number + 1}"></span>/<span th:text="${employeeList.totalPages}"></span>-->
+<!--    <a th:href="@{'/employee'(page=${employeeList.number + 1},name=${name},address=${address},phoneNumber=${phoneNumber})}"-->
+<!--       th:if="${employeeList.hasNext()}"><i class="fa-solid fa-forward"></i></a>-->
 </div>
 </body>
 <footer th:replace="/index :: footer"></footer>
