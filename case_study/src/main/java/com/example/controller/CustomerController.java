@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -44,17 +46,27 @@ public class CustomerController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute("customer") CustomerDto customerDto, RedirectAttributes attributes) {
-        Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDto, customer);
+    public String save(@ModelAttribute("customer") @Validated CustomerDto customerDto,
+                       BindingResult bindingResult,
+                       Model model,
+                       RedirectAttributes attributes) {
 
-        CustomerType customerType = new CustomerType();
-        customerType.setId(customerDto.getCustomerType());
-        customer.setCustomerType(customerType);
+        new CustomerDto().validate(customerDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            model.addAttribute("customerType", customerTypeService.findAll());
+            return "customer/create";
+        } else {
+            Customer customer = new Customer();
+            BeanUtils.copyProperties(customerDto, customer);
 
-        customerService.save(customer);
-        attributes.addFlashAttribute("success", "Thêm mới thành công");
-        return "redirect:/customers";
+            CustomerType customerType = new CustomerType();
+            customerType.setId(customerDto.getCustomerType());
+            customer.setCustomerType(customerType);
+
+            customerService.save(customer);
+            attributes.addFlashAttribute("success", "Thêm mới thành công");
+            return "redirect:/customers";
+        }
     }
 
     @GetMapping("/delete")
@@ -74,16 +86,27 @@ public class CustomerController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("customers") CustomerDto customerDto, RedirectAttributes attributes) {
-        Customer customer = new Customer();
-        BeanUtils.copyProperties(customerDto, customer);
+    public String update(@ModelAttribute("customer") @Validated CustomerDto customerDto,
+                         BindingResult bindingResult,
+                         Model model,
+                         RedirectAttributes attributes) {
 
-        CustomerType customerType = new CustomerType();
-        customerType.setId(customerDto.getCustomerType());
-        customer.setCustomerType(customerType);
 
-        customerService.save(customer);
-        attributes.addFlashAttribute("success", "Cập nhật thành công");
-        return "redirect:/customers";
+        new CustomerDto().validate(customerDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            model.addAttribute("customerType", customerTypeService.findAll());
+            return "customer/create";
+        } else {
+            Customer customer = new Customer();
+            BeanUtils.copyProperties(customerDto, customer);
+
+            CustomerType customerType = new CustomerType();
+            customerType.setId(customerDto.getCustomerType());
+            customer.setCustomerType(customerType);
+
+            customerService.save(customer);
+            attributes.addFlashAttribute("success", "Cập nhật thành công");
+            return "redirect:/customers";
+        }
     }
 }

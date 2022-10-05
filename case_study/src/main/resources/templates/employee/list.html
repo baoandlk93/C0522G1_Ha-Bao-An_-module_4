@@ -5,16 +5,25 @@
 <header th:replace="/index :: header"></header>
 <nav th:replace="/index :: navbar"></nav>
 <div class="text-center"><h1>Employee List</h1></div>
+<div class="notify">
+    <div th:if="${success}">
+        <h3 th:text="${success}" style="color: blue"></h3>
+    </div>
+</div>
 <div class="row">
     <div class="col-lg-3"></div>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+            data-bs-target="#createEmployee" data-bs-whatever="@mdo">
+        <a class="dropdown-item">Add new Employee</a>
+    </button>
     <div class="col-lg-3"></div>
     <div class="col-lg-6">
         <form class="d-flex" role="search" action="" method="get">
             <input class="form-control me-2" type="search" placeholder="Search by name" aria-label="Search" name="name">
-            <input class="form-control me-2" type="search" placeholder="Search by phone number" aria-label="Search"
-                   name="phoneNumber">
-            <input class="form-control me-2" type="search" placeholder="Search by address" aria-label="Search"
-                   name="address">
+<!--            <input class="form-control me-2" type="search" placeholder="Search by phone number" aria-label="Search"-->
+<!--                   name="phoneNumber">-->
+<!--            <input class="form-control me-2" type="search" placeholder="Search by address" aria-label="Search"-->
+<!--                   name="address">-->
             <button class="btn btn-outline-success" type="submit" style="background: chartreuse">Search</button>
         </form>
     </div>
@@ -25,15 +34,15 @@
         <th>Number</th>
         <th>Name</th>
         <th>Date of Birth</th>
-        <th>Id card</th>
+        <!--        <th>Id card</th>-->
         <th>Phone number</th>
-        <th>Email</th>
-        <th>Address</th>
+        <!--        <th>Email</th>-->
+        <!--        <th>Address</th>-->
         <th>Education Degree</th>
         <th>Position</th>
         <th>Division</th>
-        <th>Salary</th>
-        <th>Account</th>
+        <!--        <th>Salary</th>-->
+        <!--        <th>Account</th>-->
         <th>Edit</th>
         <th>Delete</th>
     </tr>
@@ -42,38 +51,261 @@
     <tr th:each="employee,employees:${employeeList}">
         <td th:text="${ employees.count}"></td>
         <td th:text="${employee.name}"></td>
-        <td th:text="${employee.dateOfBirth}"></td>
+        <td th:text="${employee.dayOfBirth}"></td>
         <!--        <td th:text="${employee.idCard}"></td>-->
         <!--        <td th:text="${employee.salary}"></td>-->
         <td th:text="${employee.phoneNumber}"></td>
-        <td th:text="${employee.email}"></td>
-        <td th:text="${employee.address}"></td>
-
-        <td th:if="${employee.division}" th:text="${employee.division.name}">
-        <td th:unless="${employee.division}"></td>
-
-        <td th:if="${employee.educationDegree}" th:text="${employee.educationDegree.name}">
-        <td th:unless="${employee.educationDegree}"></td>
-
+        <!--        <td th:text="${employee.email}"></td>-->
+        <!--        <td th:text="${employee.employeeAddress}"></td>-->
+        <td th:if="${employee.educationDegreeID}" th:text="${employee.educationDegreeID.name}">
+        <td th:unless="${employee.educationDegreeID}"></td>
         <td th:if="${employee.position}" th:text="${employee.position.name}">
         <td th:unless="${employee.position}"></td>
+        <td th:if="${employee.divisionID}" th:text="${employee.divisionID.name}">
+        <td th:unless="${employee.divisionID}"></td>
+        <td>
 
-        <td><a th:href="@{/employee/edit/{id}(id=${employee.id})}"><i
-                class="fa-sharp fa-solid fa-pen-to-square"></i></a></td>
-        <td><a th:href="@{/employee/delete/{id}(id=${employee.id})}"><i class="fa-sharp fa-solid fa-trash"></i></a></td>
-        <td><a th:href="@{/employee/view/{id}(id=${employee.id})}"><i class="fa-sharp fa-solid fa-binoculars"></i></a>
+            <a th:href="@{/employees/edit/{id}(id=${employee.id})}">
+                <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+            </a>
+        </td>
+        <td>
+            <button th:attr="onclick=|objdelete('${employee.id}', '${employee.name}')|"
+                    class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalDelete">
+                <i class="fa-solid fa-trash"></i>
+            </button>
         </td>
     </tr>
     </tbody>
 </table>
+<div class="modal fade" id="createEmployee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Add new Employee</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" th:object="${employeeDto}" th:action="@{/employees/save}">
+                <div class="modal-body">
 
-<div>
-<!--    <a th:href="@{'/employee'(page=${employeeList.number - 1},name=${name},address=${address},phoneNumber=${phoneNumber})}"-->
-<!--       th:if="${employeeList.hasPrevious()}"><i class="fa-solid fa-backward"></i></a>-->
-<!--    <span th:text="${employeeList.number + 1}"></span>/<span th:text="${employeeList.totalPages}"></span>-->
-<!--    <a th:href="@{'/employee'(page=${employeeList.number + 1},name=${name},address=${address},phoneNumber=${phoneNumber})}"-->
-<!--       th:if="${employeeList.hasNext()}"><i class="fa-solid fa-forward"></i></a>-->
+                    <input type="hidden" th:field="*{id}"/>
+                    <div class="mb-3">
+                        <label><b>Employee Name</b></label>
+                        <input type="text" th:field="*{name}"/>
+                        <p style="color: red" th:errors="*{name}"
+                           th:if="${#fields.hasErrors('name')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Date Of Birth</b></label>
+                        <input type="date" th:field="*{dayOfBirth}">
+                        <p style="color: red" th:errors="*{dayOfBirth}"
+                           th:if="${#fields.hasErrors('dayOfBirth')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>ID card</b></label>
+                        <input type="number" th:field="*{idCard}">
+                        <p style="color: red" th:errors="*{idCard}"
+                           th:if="${#fields.hasErrors('idCard')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Salary</b></label>
+                        <input type="number" th:field="*{salary}">
+                        <p style="color: red" th:errors="*{salary}"
+                           th:if="${#fields.hasErrors('salary')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Phone Number</b></label>
+                        <input type="number" th:field="*{phoneNumber}">
+                        <p style="color: red" th:errors="*{phoneNumber}"
+                           th:if="${#fields.hasErrors('phoneNumber')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Email</b></label>
+                        <input type="text" th:field="*{email}">
+                        <p style="color: red" th:errors="*{email}"
+                           th:if="${#fields.hasErrors('email')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Address</b></label>
+                        <input type="text" th:field="*{employeeAddress}">
+                        <p style="color: red" th:errors="*{employeeAddress}"
+                           th:if="${#fields.hasErrors('employeeAddress')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Position</b></label>
+                        <select th:field="*{position}">
+                            <option th:each="item : ${position}"
+                                    th:text="${item.name}"
+                                    th:value="${item.id}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Education Degree</b></label>
+                        <select th:field="*{educationDegreeID}">
+                            <option th:each="item : ${education}"
+                                    th:text="${item.name}"
+                                    th:value="${item.id}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Division</b></label>
+                        <select th:field="*{divisionID}">
+                            <option th:each="item : ${division}"
+                                    th:text="${item.name}"
+                                    th:value="${item.id}">
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+<div class="modal fade" id="updateEmployee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Employee</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" th:object="${employeeDtoUpdate}" th:action="@{/employees/update}">
+                <div class="modal-body">
+
+                    <input type="hidden" th:field="*{id}"/>
+                    <div class="mb-3">
+                        <label><b>Employee Name</b></label>
+                        <input type="text" th:field="*{name}"/>
+                        <p style="color: red" th:errors="*{name}"
+                           th:if="${#fields.hasErrors('name')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Date Of Birth</b></label>
+                        <input type="date" th:field="*{dayOfBirth}">
+                        <p style="color: red" th:errors="*{dayOfBirth}"
+                           th:if="${#fields.hasErrors('dayOfBirth')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>ID card</b></label>
+                        <input type="number" th:field="*{idCard}">
+                        <p style="color: red" th:errors="*{idCard}"
+                           th:if="${#fields.hasErrors('idCard')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Salary</b></label>
+                        <input type="number" th:field="*{salary}">
+                        <p style="color: red" th:errors="*{salary}"
+                           th:if="${#fields.hasErrors('salary')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Phone Number</b></label>
+                        <input type="number" th:field="*{phoneNumber}">
+                        <p style="color: red" th:errors="*{phoneNumber}"
+                           th:if="${#fields.hasErrors('phoneNumber')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Email</b></label>
+                        <input type="text" th:field="*{email}">
+                        <p style="color: red" th:errors="*{email}"
+                           th:if="${#fields.hasErrors('email')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Address</b></label>
+                        <input type="text" th:field="*{employeeAddress}">
+                        <p style="color: red" th:errors="*{employeeAddress}"
+                           th:if="${#fields.hasErrors('employeeAddress')}"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Position</b></label>
+                        <select th:field="*{position}">
+                            <option th:each="item : ${position}"
+                                    th:text="${item.name}"
+                                    th:value="${item.id}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Education Degree</b></label>
+                        <select th:field="*{educationDegreeID}">
+                            <option th:each="item : ${education}"
+                                    th:text="${item.name}"
+                                    th:value="${item.id}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Division</b></label>
+                        <select th:field="*{divisionID}">
+                            <option th:each="item : ${division}"
+                                    th:text="${item.name}"
+                                    th:value="${item.id}">
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div>
+        <a th:href="@{'/employees/list'(page=${employeeList.number - 1},name=${name})}"
+           th:if="${employeeList.hasPrevious()}"><i class="fa-solid fa-backward"></i></a>
+        <span th:text="${employeeList.number + 1}"></span>/<span th:text="${employeeList.totalPages}"></span>
+        <a th:href="@{'/employees/list'(page=${employeeList.number + 1},name=${name})}"
+           th:if="${employeeList.hasNext()}"><i class="fa-solid fa-forward"></i></a>
+</div>
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{/employees/delete}">
+                <div class="modal-body">
+                    <input type="text" hidden name="id" id="idDelete">
+                    <p> Bạn có muốn xóa : </p>
+                    <p id="nameDelete"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" value="delete">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<button hidden type="button" class="btn btn-success" id="editEmployee" data-bs-toggle="modal"
+        data-bs-target="#updateEmployee" data-bs-whatever="@mdo">
+</button>
+<input id="action" hidden th:value="${updateModal}">
+<script>
+    $(document).ready(function () {
+        let action = $("#action").val();
+        if(action==="open"){
+            $("#editEmployee").click();
+        }
+
+    })
+</script>
+<script>
+    function objdelete(id, name) {
+        document.getElementById("idDelete").value = id;
+        document.getElementById("nameDelete").innerText = name;
+    }
+</script>
 </body>
 <footer th:replace="/index :: footer"></footer>
 </html>

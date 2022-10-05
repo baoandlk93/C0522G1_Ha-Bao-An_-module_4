@@ -13,8 +13,9 @@ public class Facility {
     private int maxPeople;
     private boolean isDelete;
 
-
-    private int rentTypeID;
+    @ManyToOne
+    @JoinColumn(name = "rent_type",referencedColumnName = "id")
+    private RentType rentTypeID;
 
     @ManyToOne
     @JoinColumn(name = "facility_type",referencedColumnName = "id")
@@ -29,31 +30,6 @@ public class Facility {
     public Facility() {
     }
 
-    public Facility(int id,
-                    String name,
-                    int area,
-                    double cost,
-                    int maxPeople,
-                    int rentTypeID,
-                    FacilityType facilityTypeID,
-                    String standardRoom,
-                    String descriptionOtherConvenience,
-                    double poolArea,
-                    int numberOfFloors,
-                    String facilityFree) {
-        this.id = id;
-        this.name = name;
-        this.area = area;
-        this.cost = cost;
-        this.maxPeople = maxPeople;
-        this.rentTypeID = rentTypeID;
-        this.facilityTypeID = facilityTypeID;
-        this.standardRoom = standardRoom;
-        this.descriptionOtherConvenience = descriptionOtherConvenience;
-        this.poolArea = poolArea;
-        this.numberOfFloors = numberOfFloors;
-        this.facilityFree = facilityFree;
-    }
 
     public int getId() {
         return id;
@@ -95,11 +71,20 @@ public class Facility {
         this.maxPeople = maxPeople;
     }
 
-    public int getRentTypeID() {
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
+    }
+
+    public RentType getRentTypeID() {
         return rentTypeID;
     }
 
-    public void setRentTypeID(int rentTypeID) {
+    public void setRentTypeID(RentType rentTypeID) {
         this.rentTypeID = rentTypeID;
     }
 

@@ -5,66 +5,77 @@
 <header th:replace="/index :: header"></header>
 <nav th:replace="/index :: navbar"></nav>
 <div class="d-flex justify-content-center">
-    <form method="post" class="w-50 border border-2 border-success p-3 rounded form-signin">
+    <form method="post" class="w-50 border border-2 border-success p-3 rounded form-signin" th:action="@{/facility/save}" th:object="${facility}">
         <select id="service" onchange="myFunction(this.value)" class="form-select form-select-lg mb-3"
-                aria-label=".form-select-lg example">
-            <option> -- Choose Service --</option>
-            <option value="villa">Villa</option>
-            <option value="room"> Room</option>
-            <option value="house"> House</option>
+                aria-label=".form-select-lg example" th:field="*{facilityTypeID}">
+            <option th:each="item : ${facilityType}"
+            th:text="${item.name}"
+            th:value="${item.id}">
+            </option>
         </select>
         <div class="container justify-content-center">
             <div class="input-group" style="display: block">
+                <label>Service Name</label>
                 <p class="input-group-text">
-                    <input type="text" class="form-control" name="name" placeholder="Service Name">
+                    <input type="text" class="form-control" name="name" placeholder="Service Name" th:field="*{name}"/>
                 </p>
             </div>
             <div class="input-group" style="display: block">
+                <label> Area</label>
                 <p class="input-group-text">
-                    <input type="text" class="form-control" name="area" placeholder="Service Area">
+                    <input type="text" class="form-control" name="area" placeholder="Service Area" th:field="*{area}"/>
                 </p>
             </div>
             <div class="input-group " style="display: block">
+                <label>Cost</label>
                 <p class="input-group-text">
-                    <input type="text" class="form-control" name="cost" placeholder="Service Cost">
+                    <input type="text" class="form-control" name="cost" placeholder="Service Cost" th:field="*{cost}">
                 </p>
             </div>
             <div class="input-group" style="display: block">
+                <label>Max People </label>
                 <p class="input-group-text">
-                    <input type="text" class="form-control" name="maxPeople" placeholder="Service Max People">
+                    <input type="text" class="form-control" name="maxPeople" placeholder="Service Max People" th:field="*{maxPeople}">
                 </p>
             </div>
-            <div class="input-group" style="display: block">
-                <p class="input-group-text">
-                    <input type="text" class="form-control" name="rentTypeID" placeholder="Rent Type ID">
-                </p>
-            </div>
+            <label> Rent Type</label>
+            <select  class="form-select form-select-lg mb-3"
+                    aria-label=".form-select-lg example" th:field="*{rentTypeID}">
+                <option th:each="item : ${rentType}"
+                        th:text="${item.name}"
+                        th:value="${item.id}">
+                </option>
+            </select>
             <div class="input-group" id="villa1" style="display: block">
+                <label>Standard Room</label>
                 <p class="input-group-text">
-                    <input type="text" class="form-control" name="standardRoom" placeholder="Standard Room">
+                    <input type="text" class="form-control" name="standardRoom" placeholder="Standard Room" th:field="*{standardRoom}">
                 </p>
             </div>
             <div class="input-group" id="villa2" style="display: none">
+                <label>Description</label>
                 <p class="input-group-text">
                     <input type="text" class="form-control" name="descriptionOtherConvenience"
-                           placeholder="Description Other Convenience">
+                           placeholder="Description Other Convenience" th:field="*{descriptionOtherConvenience}">
                 </p>
             </div>
             <div class="input-group" id="villa3" style="display: none">
+                <label>Pool Area</label>
                 <p class="input-group-text">
-                    <input type="text" class="form-control" name="poolArea" placeholder="Pool Area">
+                    <input type="text" class="form-control" name="poolArea" placeholder="Pool Area" th:field="*{poolArea}">
                 </p>
             </div>
             <div class="input-group" id="villa4" style="display: none">
+                <label>Number Of Floors</label>
                 <p class="input-group-text">
-                    <input type="text" class="form-control" name="numberOfFloors" placeholder="Number Of Floors">
+                    <input type="text" class="form-control" name="numberOfFloors" placeholder="Number Of Floors" th:field="*{numberOfFloors}">
                 </p>
             </div>
             <div class="input-group" id="room" style="display: none">
+                <label>Free Service</label>
                 <p class="input-group-text intro">
-                    <input type="text" class="form-control" name="facilityFree" placeholder="Free Service">
+                    <input type="text" class="form-control" name="facilityFree" placeholder="Free Service" th:field="*{facilityFree}">
                 </p>
-
             </div>
             <div class="input-group">
                 <button class="btn btn-lg btn-success" type="submit" value="create">Create</button>
@@ -75,13 +86,13 @@
 <script>
     function myFunction(value) {
         switch (value) {
-            case "villa":
+            case "1":
                 document.getElementById("villa1").style.display = "block";
                 document.getElementById("villa2").style.display = "block";
                 document.getElementById("villa3").style.display = "block";
                 document.getElementById("villa4").style.display = "block";
                 break;
-            case "house":
+            case "2":
                 document.getElementById("villa1").style.display = "none";
                 document.getElementById("villa2").style.display = "none";
                 document.getElementById("villa3").style.display = "none";
@@ -90,7 +101,7 @@
                 document.getElementById("villa2").style.display = "block";
                 document.getElementById("villa4").style.display = "block";
                 break;
-            case "room":
+            case "3":
                 document.getElementById("villa1").style.display = "none";
                 document.getElementById("villa2").style.display = "none";
                 document.getElementById("villa3").style.display = "none";

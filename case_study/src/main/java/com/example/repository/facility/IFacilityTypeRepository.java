@@ -1,4 +1,7 @@
 package com.example.repository.facility;
 
-public interface IFacilityTypeRepository {
+import com.example.model.facility.FacilityType;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IFacilityTypeRepository extends JpaRepository<FacilityType,Integer> {
 }
