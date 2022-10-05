@@ -40,8 +40,10 @@
         <td><a th:href="@{/facility/edit/{id}(id=${facility.id})}"><i
                 class="fa-sharp fa-solid fa-pen-to-square"></i></a></td>
         <td>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fa-sharp fa-solid fa-trash"></i></a>
+            <button th:attr="onclick=|objDelete('${facility.id}', '${facility.name}')|"
+                    class="btn btn-danger btn-outline-secondary btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalDelete">
+                <i class="fa-solid fa-trash"></i>
             </button>
         </td>
     </tr>
@@ -54,23 +56,33 @@
     <a th:href="@{'/facility/list'(page=${facilityList.number + 1},name=${name})}"
        th:if="${facilityList.hasNext()}"><i class="fa-solid fa-forward"></i></a>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <form th:action="@{/facility/delete}">
             <div class="modal-body">
-                ...
+                <input type="text" hidden name="id" id="idDelete">
+                <p> Bạn có muốn xóa : </p>
+                <p id="nameDelete"></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Delete</button>
+                <button type="submit" class="btn btn-primary">Delete</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
+<script>
+    function objDelete(id, name) {
+        document.getElementById("idDelete").value = id;
+        document.getElementById("nameDelete").innerText = name;
+    }
+</script>
 </body>
 <footer th:insert="/index :: footer"></footer>
 </html>

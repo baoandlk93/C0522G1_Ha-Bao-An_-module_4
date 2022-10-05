@@ -35,6 +35,7 @@ public class CustomerController {
         Page<Customer> customer = customerService.findAll(pageable, name);
         model.addAttribute("customers", customer);
         model.addAttribute("customerType", customerTypeService.findAll());
+        model.addAttribute("name",name);
         return "customer/list";
     }
 

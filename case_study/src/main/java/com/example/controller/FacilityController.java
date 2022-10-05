@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/facility")
@@ -74,6 +75,44 @@ public class FacilityController {
 
         facilityService.save(facility);
         attributes.addFlashAttribute("success","Thêm mới thành công");
+        return "redirect:/facility/list";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable int id,Model model,FacilityDto facilityDto){
+        Optional<Facility> facility = facilityService.findById(id);
+        if (facility.isPresent()){
+            BeanUtils.copyProperties(facility.get(),facilityDto);
+            model.addAttribute("facilityDto",facilityDto);
+            model.addAttribute("rentType",getRentType());
+            model.addAttribute("facilityType",getFacilityType());
+        }
+        return "facility/edit";
+    }
+
+    @PostMapping("/update")
+    public String update(@ModelAttribute("facilityDto") FacilityDto facilityDto, RedirectAttributes attributes){
+        Facility facility = new Facility();
+        BeanUtils.copyProperties(facilityDto,facility);
+
+        RentType rentType = new RentType();
+        rentType.setId(facilityDto.getRentTypeID());
+        facility.setRentTypeID(rentType);
+
+        FacilityType facilityType = new FacilityType();
+        facilityType.setId(facilityDto.getFacilityTypeID());
+        facility.setFacilityTypeID(facilityType);
+
+        facilityService.save(facility);
+        attributes.addFlashAttribute("success","Cập nhật thành công");
+        return "redirect:/facility/list";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam int id, RedirectAttributes attributes) {
+        facilityService.remove(id);
+        attributes.addFlashAttribute("success", "Xóa thành công " +
+                facilityService.findById(id).get().getName());
         return "redirect:/facility/list";
     }
 }
